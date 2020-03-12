@@ -4,7 +4,7 @@ import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 @Entity()
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id: number;
+    id: string;
 
     @Column()
     @IsEmail()
@@ -20,4 +20,8 @@ export class User {
     @IsString()
     @IsNotEmpty()
     password: string;
+
+    @Column()
+    @IsString()
+    name?: string;
 }
