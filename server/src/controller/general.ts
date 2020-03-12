@@ -17,9 +17,9 @@ export default class GeneralController {
      *                      schema:
      *                          type: string
      *                      example:
-     *                          Welcome a API Core
+     *                          Welcome to ACME BROS Pictures API
      */
     public static async index(ctx: DefaultContext) {
-        ctx.body = 'Welcome a API Core';
+        ctx.body = 'Welcome to ACME BROS Pictures API';
     }
 }
