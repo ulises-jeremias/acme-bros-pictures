@@ -23,12 +23,15 @@ export interface IConfig {
         host: string,
         port: number|boolean,
         name: string,
-        dbsslconn: boolean
+        dbSslConn: boolean
     };
     cors: {
         origin: string,
         allowMethods: string[],
         exposeHeaders: string[]
+    };
+    session: {
+        secret: string,
     };
     bodyParser: {
         enableTypes: string[],
@@ -52,12 +55,15 @@ const config: IConfig = {
         host: process.env.DB_HOST || 'localhost',
         port: normalizePort(process.env.DB_PORT || 5432),
         name: process.env.DB_NAME || 'postgres',
-        dbsslconn: process.env.NODE_ENV === 'production',
+        dbSslConn: process.env.NODE_ENV === 'production',
     },
     cors: {
         origin: '*',
         allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],
         exposeHeaders: ['X-Request-Id'],
+    },
+    session: {
+        secret: process.env.SECRET || 'acme',
     },
     bodyParser: {
         enableTypes: ['json', 'form'],

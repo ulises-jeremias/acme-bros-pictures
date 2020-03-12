@@ -12,18 +12,18 @@ const connectionOpts: ConnectionOptions = {
     username: config.db.user,
     password: config.db.pass,
     database: config.db.name,
-    entities: [`${parentDir}/model/entity/**/*{.ts,.js}`],
-    migrations: [`${parentDir}/model/migration/**/*{.ts,.js}`],
-    subscribers: [`${parentDir}/model/subscriber/**/*{.ts,.js}`],
+    entities: [`${parentDir}/entity/**/*{.ts,.js}`],
+    migrations: [`${parentDir}/migration/**/*{.ts,.js}`],
+    subscribers: [`${parentDir}/subscriber/**/*{.ts,.js}`],
     cli: {
-        entitiesDir: `${parentDir}/model/entity`,
-        migrationsDir: `${parentDir}/model/migration`,
-        subscribersDir: `${parentDir}/model/subscriber`
+        entitiesDir: `${parentDir}/entity`,
+        migrationsDir: `${parentDir}/migration`,
+        subscribersDir: `${parentDir}/subscriber`
     },
     synchronize: false,
     logging: !config.isProduction,
     extra: {
-        ssl: config.db.dbsslconn, // if not development, will use SSL
+        ssl: config.db.dbSslConn, // if not development, will use SSL
     }
 };
 

@@ -1,6 +1,9 @@
+require('./module/auth');
 const responseTime = require('koa-response-time');
 const validator = require('node-input-validator');
 const swaggerUi = require('swagger-ui-koa');
+const passport = require('koa-passport');
+const session = require('koa-session');
 
 import Koa from 'koa';
 
@@ -38,6 +41,10 @@ app.use(helmet());
 // Enable cors with default options
 app.use(cors(config.cors));
 
+// Session
+app.keys = [config.session.secret];
+app.use(session({}, app));
+
 // Enable bodyParser with default options
 app.use(bodyParser(config.bodyParser));
 
@@ -58,6 +65,13 @@ app.use(swaggerUi.serve);
 
 app.use(compress());
 app.use(options());
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+// authentication
+app.use(passport.initialize());
+app.use(passport.session());
 
 // routers
 app.use(router.routes()).use(router.allowedMethods());
