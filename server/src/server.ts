@@ -1,8 +1,6 @@
-require('./module/auth');
 const responseTime = require('koa-response-time');
 const validator = require('node-input-validator');
 const swaggerUi = require('swagger-ui-koa');
-const passport = require('koa-passport');
 const session = require('koa-session');
 
 import Koa from 'koa';
@@ -14,6 +12,7 @@ import cors from '@koa/cors';
 
 import { router } from './router';
 import { getLogLevelForStatus } from './module/logger';
+import passport from './module/auth';
 import config from './config';
 
 import overrideValidator from './middleware/validation';
@@ -28,7 +27,7 @@ const app: Koa = new Koa();
 // centralized error handling
 app.on('error', (err: Error, ctx: Koa.DefaultContext): void => {
     console.error(err);
-    console.error({req: ctx.request, extra: ctx, level: getLogLevelForStatus(ctx.status)});
+    console.error({ req: ctx.request, extra: ctx, level: getLogLevelForStatus(ctx.status) });
 });
 
 // Validation middleware -> adds ctx.validate
@@ -65,9 +64,6 @@ app.use(swaggerUi.serve);
 
 app.use(compress());
 app.use(options());
-
-app.use(passport.initialize())
-app.use(passport.session())
 
 // authentication
 app.use(passport.initialize());

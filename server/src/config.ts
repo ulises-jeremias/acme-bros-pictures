@@ -31,6 +31,7 @@ export interface IConfig {
         exposeHeaders: string[]
     };
     session: {
+        expiresIn: number,
         secret: string,
     };
     bodyParser: {
@@ -63,6 +64,7 @@ const config: IConfig = {
         exposeHeaders: ['X-Request-Id'],
     },
     session: {
+        expiresIn: 10080,
         secret: process.env.SECRET || 'acme',
     },
     bodyParser: {
