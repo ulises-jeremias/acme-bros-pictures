@@ -16,7 +16,8 @@ const servers: Array<string> = [];
 const definition: any = {
   openapi: '3.0.0',
   info,
-  servers
+  servers,
+  host: '/api/v1'
 };
 
 // Options for the swagger specification

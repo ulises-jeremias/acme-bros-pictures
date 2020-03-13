@@ -13,3 +13,14 @@ components:
       - status
       - code
       - message
+    User:
+      type: object
+      properties:
+        uuid:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
