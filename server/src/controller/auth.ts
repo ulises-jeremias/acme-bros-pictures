@@ -40,11 +40,11 @@ export default class AuthController {
      *                  type: string
      *          400:
      *              description: Invalid username/password supplied
-     * 
+     *
      */
     public static async login(ctx: DefaultContext) {
         const token = generateToken(ctx.state.user);
-        ctx.ok(token);
+        ctx.ok({ data: `JWT ${token}` });
     }
 
     /**
@@ -65,7 +65,7 @@ export default class AuthController {
      *                  $ref: "#/components/responses/Unauthorized"
      */
     public static async me(ctx: DefaultContext) {
-        ctx.ok(ctx.state.user);
+        ctx.ok({ data: ctx.state.user });
     }
 
     /**
@@ -103,7 +103,7 @@ export default class AuthController {
      *                  $ref: "#/components/schemas/User"
      *          400:
      *              description: Invalid username/password supplied
-     * 
+     *
      */
     public static async register(ctx: DefaultContext) {
         const { username, email, password, name } = ctx.request.body;
@@ -123,12 +123,12 @@ export default class AuthController {
             throw new UserAlreadyExists();
         }
 
-        const newUser = new User({ username, email, password, name });
+        const newUser = userRepository.create({ username, email, password, name: name || '' });
 
         try {
             const createdUser: User = await userRepository.save(newUser);
             delete createdUser.password;
-            return ctx.created(createdUser);
+            return ctx.created({ data: createdUser });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
               throw new UserAlreadyExists('User with this credentials already exists');

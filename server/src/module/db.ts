@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { createConnection, Connection, ConnectionOptions } from 'typeorm';
+import { createConnection, Connection, ConnectionOptions, Table } from 'typeorm';
 import path from 'path';
 import config from '../config';
 
@@ -62,5 +62,12 @@ export class Database implements IDatabase {
 
     public async dropDatabase() {
         await this.connection.dropDatabase();
+    }
+
+    public async createTable(schema: any) {
+        const queryRunner = this.connection.createQueryRunner();
+        const metadata = this.connection.getMetadata(schema);
+        const newTable = Table.create(metadata, this.connection.driver);
+        await queryRunner.createTable(newTable);
     }
 }

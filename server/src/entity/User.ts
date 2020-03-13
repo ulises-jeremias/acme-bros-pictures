@@ -18,7 +18,7 @@ export class User {
     @IsNotEmpty()
     username: string;
 
-    @Column({ type: 'text', select: false })
+    @Column()
     @IsString()
     @IsNotEmpty()
     password: string;
@@ -33,19 +33,12 @@ export class User {
     @UpdateDateColumn()
     updatedAt?: Date;
 
-    constructor(params: { username: string, password: string, email: string, name?: string }) {
-        this.username = this.username;
-        this.email = this.email;
-        this.password = this.password;
-        this.name = this.name;
-    }
-
     public async checkPassword(plainPassword: string): Promise<boolean> {
-        return compare(plainPassword, this.password);
+        return await compare(plainPassword, this.password);
     }
 
     @BeforeInsert()
     private async _hashPassword?() {
-        this.password = await hash(this.password);
+        this.password = await hash(this.password, 10);
     }
 }
