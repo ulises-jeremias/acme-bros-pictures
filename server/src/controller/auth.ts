@@ -131,9 +131,9 @@ export default class AuthController {
             return ctx.created({ data: createdUser });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
-              throw new UserAlreadyExists('User with this credentials already exists');
+                throw new UserAlreadyExists('User with this credentials already exists');
             } else {
-              throw new InternalError(err);
+                throw new InternalError(err);
             }
         }
     }
