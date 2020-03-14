@@ -1,0 +1,13 @@
+{
+  "title": "Log in",
+  "sendButton": "Log in",
+  "username": {
+    "label": "E-mail or username",
+    "placeholder": "E-mail or username"
+  },
+  "password": {
+    "label": "Password",
+    "placeholder": "Password"
+  },
+  "contact": "Any inconvenience or doubt can contact the administration."
+}

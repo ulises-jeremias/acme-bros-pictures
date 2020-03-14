@@ -1,0 +1,13 @@
+{
+  "validators": {
+    "messages": {
+      "required": "The field is required",
+      "maximum": "The field must have a maximum of {{max}} characteres",
+      "minimum": "The field must have a minimum of {{min}} characteres",
+      "date": "The entered date is not in format `dd/mm/yyyy`",
+      "confirmation": "It must have the same value as $t(common:{{field}})"
+    }
+  },
+  "newPassword": "the new password",
+  "newPasswordConfirmation": "the password confirmation"
+}

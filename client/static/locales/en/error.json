@@ -1,0 +1,29 @@
+{
+  "title": "Algo salió mal",
+  "defaultError": "No se puede mostrar información sobre el error actual",
+  "option": {
+    "refresh": "Volver a ingresar"
+  },
+  "messages": {
+    "networkError": "No se pudo conectar con el servidor. Vuelva a intentarlo luego."
+  },
+  "code": {
+    "301": "Recurso movido permanentemente.",
+    "400": "Petición incorrecta.",
+    "401": "Acceso no autorizado.",
+    "403": "Acceso prohibido.",
+    "404": "No encontrado",
+    "405": "Método HTTP no admitido.",
+    "406": "Formato no aceptado.",
+    "407": "Autenticación requerida.",
+    "408": "Tiempo de espera del cliente superado.",
+    "409": "Hubo un conflicto con el recurso que quiere usar.",
+    "500": "Error interno del servidor.",
+    "501": "Funcionalidad no implementada por el servidor.",
+    "502": "Fallo de conexión con otro servidor.",
+    "503": "Servicio no disponible.",
+    "504": "Tiempo de espera superado.",
+    "505": "Versión HTTP no soportada.",
+    "default": "Error general."
+  }
+}

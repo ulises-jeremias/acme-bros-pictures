@@ -1,0 +1,26 @@
+#navbar {
+  height: @navbarHeight !important;
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.315) !important;
+  z-index: 2001 !important;
+
+  .image {
+    margin-left: 2.5rem;
+    width: calc(@navbarHeight ~" * 2") !important;
+  }
+
+  .image.mobile {
+    margin-left: 0 !important;
+    height: auto !important;
+    width: calc(@navbarHeight ~" * 2,8") !important;
+  }
+
+  .navbar-title {
+    .title-divider {
+      margin-left: calc(~"13.85rem -" @navbarHeight ~" * 3.2");
+    }
+  }
+
+  .icon.corner {
+    font-size: 0.45em !important;
+  }
+}

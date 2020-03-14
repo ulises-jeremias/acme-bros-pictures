@@ -1,0 +1,38 @@
+@import (multiple) "../semantic-ui/site/globals/site.variables";
+@import (multiple) "./constants/navbar.less";
+
+.toast {
+  width: 30% !important;
+  float: right;
+  z-index: 2;
+  position: fixed !important;
+  top: calc(@navbarHeight ~" + 10px") !important;
+  right: 12px;
+}
+
+.ui.form {
+  .error span {
+    color: @red !important;
+    font-size: smaller;
+  }
+  .warn span {
+    color: @orange !important;
+    font-size: smaller;
+  }
+
+  .field {
+    .info {
+      color: @blue !important;
+    }
+  }
+}
+
+.white-link {
+  color: #fff !important;
+}
+
+.inline.field {
+  input[type=number] {
+    width: 90px;
+  }
+}
