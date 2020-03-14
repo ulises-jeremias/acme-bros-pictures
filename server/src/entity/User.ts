@@ -1,7 +1,8 @@
 const { compare, hash } = require('bcryptjs');
 
-import { BeforeInsert, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeInsert, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, JoinTable, ManyToMany } from 'typeorm';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Project } from './Project';
 
 @Entity()
 export class User {
@@ -32,6 +33,10 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt?: Date;
+
+    @ManyToMany(type => Project, project => project.employees)
+    @JoinTable()
+    projects: Promise<Project[]>;
 
     public async checkPassword(plainPassword: string): Promise<boolean> {
         return await compare(plainPassword, this.password);
