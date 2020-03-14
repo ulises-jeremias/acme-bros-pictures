@@ -20,7 +20,7 @@ const connectionOpts: ConnectionOptions = {
         migrationsDir: `${parentDir}/migration`,
         subscribersDir: `${parentDir}/subscriber`
     },
-    synchronize: false,
+    synchronize: !config.isProduction,
     logging: !config.isProduction,
     extra: {
         ssl: config.db.dbSslConn, // if not development, will use SSL
@@ -55,6 +55,7 @@ export class Database implements IDatabase {
     public async reset() {
         await this.connection.dropDatabase();
         await this.connection.runMigrations();
+        await this.connection.showMigrations();
     }
 
     public async runMigrations() {

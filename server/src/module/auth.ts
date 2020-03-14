@@ -45,8 +45,11 @@ passport.deserializeUser(async (username: string, done: DeserializeUserFn<User>)
 passport.use(new LocalStrategy(localOptions, async (username: string, password: string, done: LocalStrategyFn<User>) => {
     try {
         const user = await fetchUser(username);
-        const checked = await user.checkPassword(password);
+        if (!user) {
+            done(null, false);
+        }
 
+        const checked = await user.checkPassword(password);
         if (checked) {
             done(null, user);
         } else {
