@@ -50,7 +50,7 @@ export default class AuthController {
     /**
      * @swagger
      * /auth/me:
-     *  post:
+     *  get:
      *      tags:
      *          - Auth
      *      summary: Access profile info.
