@@ -7,7 +7,10 @@ const router = new Router();
 const requireAuth = passport.authenticate('jwt');
 
 router
+    .get('/', requireAuth, tracks.list)
+    .get('/:id', requireAuth, tracks.track)
     .get('/:id/workflow', requireAuth, tracks.trackWorkflow)
+    .post('/:id/workflow', requireAuth, tracks.createTrackWorkflow)
 ;
 
 export default router;

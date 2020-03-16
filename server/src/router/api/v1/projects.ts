@@ -8,6 +8,8 @@ const requireAuth = passport.authenticate('jwt');
 
 router
     .get('/', requireAuth, projects.list)
+    .get('/:id', requireAuth, projects.project)
+    .get('/:id/tracks', requireAuth, projects.projectTracks)
 ;
 
 export default router;
