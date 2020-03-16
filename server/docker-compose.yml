@@ -1,0 +1,19 @@
+# Use postgres/example user/password credentials
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      target: production
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    env_file: .env
+
+  db:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}

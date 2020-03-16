@@ -1,0 +1,28 @@
+# Use postgres/example user/password credentials
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    env_file: .env
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+
+  db:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
