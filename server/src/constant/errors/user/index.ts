@@ -1,1 +1,2 @@
-export * from './already-exists-user';
+export * from './user-already-exists';
+export * from './user-not-found';
