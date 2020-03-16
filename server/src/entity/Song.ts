@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { IsString } from 'class-validator';
 import { Track } from './Track';
 
 @Entity()
 export class Song {
     @PrimaryGeneratedColumn('uuid')
-    uuid: string;
+    id: string;
 
     @Column()
     @IsString()
@@ -16,6 +16,5 @@ export class Song {
     author: string;
 
     @ManyToOne(type => Track, track => track.song)
-    @JoinTable()
     tracks: Promise<Track[]>;
 }

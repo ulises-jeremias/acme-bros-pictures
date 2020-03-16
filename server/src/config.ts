@@ -53,7 +53,7 @@ const config: IConfig = {
     db: {
         user: process.env.DB_USER || 'postgres',
         pass: process.env.DB_PASS || 'postgres',
-        host: process.env.DB_HOST || 'localhost',
+        host: process.env.DB_HOST || 'db',
         port: normalizePort(process.env.DB_PORT || 5432),
         name: process.env.DB_NAME || 'postgres',
         dbSslConn: process.env.NODE_ENV === 'production',

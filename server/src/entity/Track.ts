@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToMany, OneToOne, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { Project } from './Project';
 import { Song } from './Song';
 import { Workflow } from './Workflow';
@@ -6,7 +6,7 @@ import { Workflow } from './Workflow';
 @Entity()
 export class Track {
     @PrimaryGeneratedColumn('uuid')
-    uuid: string;
+    id: string;
 
     @Column('timestamp')
     startTime: Timestamp;
@@ -21,14 +21,12 @@ export class Track {
     songEndTime: Timestamp;
 
     @OneToMany(type => Project, project => project.tracks)
-    @JoinTable()
     project: Promise<Project>;
 
     @OneToMany(type => Song, song => song.tracks)
-    @JoinTable()
     song: Promise<Song>;
 
-    @OneToOne(type => Workflow, workflow => workflow.track)
-    @JoinTable()
+    @OneToOne(type => Workflow, workflow => workflow.track, { cascade: ['update'] })
+    @JoinColumn()
     workflow: Promise<Workflow>;
 }

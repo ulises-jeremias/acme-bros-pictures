@@ -6,14 +6,13 @@ import { User } from './User';
 @Entity()
 export class Project {
     @PrimaryGeneratedColumn('uuid')
-    uuid: string;
+    id: string;
 
     @Column()
     @IsString()
     name: string;
 
     @ManyToOne(type => Track, track => track.project)
-    @JoinTable()
     tracks: Promise<Track[]>;
 
     @ManyToMany(type => User, employee => employee.projects)
