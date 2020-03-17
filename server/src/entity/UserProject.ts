@@ -16,7 +16,7 @@ export const watchingOptions: Watching[] = [
     Watching.IGNORING,
 ];
 
-@Entity('user_projects_project')
+@Entity('user_project')
 export class UserProject {
     @PrimaryGeneratedColumn('increment')
     id: number;
