@@ -4,7 +4,7 @@ import passport from '../../../module/auth';
 
 const router = new Router();
 
-const requireAuth = passport.authenticate('jwt');
+const requireAuth = passport.authenticate('jwt', { failWithError: true });
 
 router
     .get('/', requireAuth, workflows.list)

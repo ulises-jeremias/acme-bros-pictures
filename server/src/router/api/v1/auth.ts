@@ -4,8 +4,8 @@ import passport from '../../../module/auth';
 
 const router = new Router();
 
-const requireAuth = passport.authenticate('jwt');
-const requireLogin = passport.authenticate('local');
+const requireAuth = passport.authenticate('jwt', { failWithError: true });
+const requireLogin = passport.authenticate('local', { failWithError: true });
 
 router
     .get('/me', requireAuth, auth.me)

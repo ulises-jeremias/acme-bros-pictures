@@ -19,9 +19,15 @@ export default () => async (ctx: DefaultContext, next: () => Promise<any>) => {
                 code: err.code,
                 message: err.message,
             });
+        } else if (err.name === 'AuthenticationError') {
+            ctx.error({
+                statusCode: constants.HTTP_STATUS_UNAUTHORIZED,
+                code: 'UNAUTHORIZED',
+                message: err.message,
+            });
         } else {
             ctx.error({
-                status: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
+                statusCode: constants.HTTP_STATUS_INTERNAL_SERVER_ERROR,
                 code: 'UNKNOWN_ERROR',
                 message: 'The server encountered an unknown error.',
             });
