@@ -37,7 +37,7 @@ export class User {
 
     @OneToMany(type => UserProject, userProject => userProject.user)
     @JoinTable({
-      name: 'user_project',
+      name: 'user_projects_project',
       joinColumn: {
           name: 'user_id',
           referencedColumnName: 'id',
