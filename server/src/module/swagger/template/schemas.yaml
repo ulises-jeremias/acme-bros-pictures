@@ -2,25 +2,151 @@ components:
   schemas:
     Error:
       type: object
+      required:
+        - status
+        - code
+        - message
       properties:
         status:
           type: string
+          example: 500
         code:
           type: string
+          example: INTERNAL_ERROR
         message:
           type: string
-      required:
-      - status
-      - code
-      - message
-    User:
+          example: The server encountered an internal error.
+    Project:
       type: object
+      required:
+        - name
       properties:
-        uuid:
-          type: string
-        username:
-          type: string
         name:
           type: string
+          example: The Room
+        tracks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Track'
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Song:
+      type: object
+      required:
+        - title
+        - author
+      properties:
+        title:
+          type: string
+          example: I will survive
+        author:
+          type: string
+          example: ‎Freddie Perren, Dino Fekaris
+    Task:
+      type: object
+      required:
+        - status
+      properties:
+        startDate:
+          type: string
+          example: 2020-01-23
+        endDate:
+          type: string
+          example: 2020-01-25
+        status:
+          type: string
+          enum:
+            - todo
+            - running
+            - success
+            - failed
+          example: todo
+        task:
+          $ref: '#/components/schemas/Task'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Track:
+      type: object
+      required:
+        - startTime
+        - endTime
+        - songStartTime
+        - songEndTime
+        - project
+        - song
+      properties:
+        startTime:
+          type: string
+          example:
+        endTime:
+          type: string
+          example:
+        songStartTime:
+          type: string
+          example:
+        songEndTime:
+          type: string
+          example:
+        project:
+          $ref: '#/components/schemas/Project'
+        song:
+          $ref: '#/components/schemas/Song'
+        workflow:
+          $ref: '#/components/schemas/Workflow'
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    User:
+      type: object
+      required:
+        - email
+        - username
+        - password
+      properties:
         email:
+          type: string
+          example: ucornejo@acme.org
+        username:
+          type: string
+          example: ucornejo
+        password:
+          type: string
+          example:
+        name:
+          type: string
+          example: Ulises Jeremias Cornejo Fandos
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Workflow:
+      type: object
+      required:
+        - title
+        - expectedDate
+        - track
+      properties:
+        title:
+          type: string
+          example: Workflow with independent group
+        expectedStartDate:
+          type: string
+        startDate:
+          type: string
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        createdAt:
+          type: string
+        updatedAt:
           type: string

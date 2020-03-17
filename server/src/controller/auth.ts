@@ -54,57 +54,20 @@ export default class AuthController {
      *      tags:
      *          - Auth
      *      summary: Access profile info.
+     *      security:
+     *          - auth: []
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
      *                  $ref: "#/components/schemas/User"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
      */
     public static async me(ctx: DefaultContext) {
         ctx.ok({ data: ctx.state.user });
     }
 
-    /**
-     * @swagger
-     * /auth:
-     *  post:
-     *      tags:
-     *          - Auth
-     *      summary: Register user into the system.
-     *      parameters:
-     *          - name: username
-     *            in: body
-     *            description: The user name of the user
-     *            required: true
-     *            type: string
-     *          - name: name
-     *            in: body
-     *            description: The name of the user
-     *            required: false
-     *            type: string
-     *          - name: email
-     *            in: body
-     *            description: The email of the user in clear text
-     *            required: true
-     *            type: string
-     *          - name: password
-     *            in: body
-     *            description: The password of the user in clear text
-     *            required: true
-     *            type: string
-     *      responses:
-     *          201:
-     *              description: Successful operation
-     *              schema:
-     *                  $ref: "#/components/schemas/User"
-     *          400:
-     *              description: Invalid username/password supplied
-     *
-     */
     public static async register(ctx: DefaultContext) {
         const { username, email, password, name } = ctx.request.body;
 

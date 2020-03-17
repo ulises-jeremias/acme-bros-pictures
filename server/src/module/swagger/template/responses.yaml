@@ -21,7 +21,21 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
     Unauthorized:
-      description: Unauthorized
+      description: Access token is missing or invalid
+      headers:
+        Authorization:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     BadRequest:
       description: Required parameters are missing
       content:

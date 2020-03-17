@@ -19,15 +19,19 @@ export default class TracksController {
      *      tags:
      *          - Tracks
      *      summary: Access tracks for the connected user.
+     *      security:
+     *          - auth: []
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Project"
+     *                  type: array
+     *                  items:
+     *                      $ref: "#/components/schemas/Track"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async list(ctx: DefaultContext) {
         const user: User = ctx.state.user;
@@ -48,20 +52,30 @@ export default class TracksController {
 
     /**
      * @swagger
-     * /tracks/:id:
+     * /tracks/{id}:
      *  get:
      *      tags:
      *          - Tracks
-     *      summary: Access to the track for the given id.
+     *      summary: Access track data.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The track identifier
+     *            type: string
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
      *                  $ref: "#/components/schemas/Track"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async track(ctx: DefaultContext) {
         const { id } = ctx.request.params;
@@ -72,7 +86,7 @@ export default class TracksController {
         const track = await trackRepository.findOne(id);
         const trackProject = await track.project;
         const authProjects = await user.projects;
-        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id)
+        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id);
 
         if (!project) {
             throw new Forbidden('You cannot access to the asked data');
@@ -83,20 +97,32 @@ export default class TracksController {
 
     /**
      * @swagger
-     * /tracks/:id/workflow:
+     * /tracks/{id}/workflow:
      *  get:
      *      tags:
      *          - Tracks
      *      summary: Access workflow for the given track.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The track identifier
+     *            type: string
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Workflow"
+     *                  type: array
+     *                  items:
+     *                      $ref: "#/components/schemas/Workflow"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async trackWorkflow(ctx: DefaultContext) {
         const { id } = ctx.request.params;
@@ -107,7 +133,7 @@ export default class TracksController {
         const track = await trackRepository.findOne(id);
         const trackProject = await track.project;
         const authProjects = await user.projects;
-        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id)
+        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id);
 
         if (!project) {
             throw new Forbidden('You cannot access to the asked data');
@@ -121,6 +147,49 @@ export default class TracksController {
         }
     }
 
+    /**
+     * @swagger
+     * /tracks/{id}/workflow:
+     *  post:
+     *      tags:
+     *          - Tracks
+     *      summary: Create the workflow for the given track.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The track identifier
+     *            type: string
+     *          - name: title
+     *            in: body
+     *            description: The worflow description
+     *            type: string
+     *            required: true
+     *          - name: expectedStartDate
+     *            in: body
+     *            description: The worflow expected start date
+     *            type: string
+     *            required: true
+     *          - name: tasks
+     *            in: body
+     *            description: The tasks
+     *            type: array
+     *            items:
+     *                  $ref: "#/components/schemas/Task"
+     *      responses:
+     *          201:
+     *              description: Successful operation
+     *              schema:
+     *                  $ref: "#/components/schemas/Workflow"
+     *          401:
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
+     */
     public static async createTrackWorkflow(ctx: DefaultContext) {
         const { id } = ctx.request.params;
         const { title, expectedStartDate, tasks } = ctx.request.body;
@@ -128,7 +197,7 @@ export default class TracksController {
         ctx.validate({ title, expectedStartDate, tasks }, {
             title: ['required'],
             expectedStartDate: ['required', 'date'],
-            tasks: ['required', 'array'],
+            tasks: ['array'],
             'tasks.*.status': [`in:${taskStatusValues.join(',')}`],
             'tasks.*.startDate': ['date'],
             'tasks.*.endDate': ['date'],
@@ -142,7 +211,7 @@ export default class TracksController {
         const track = await trackRepository.findOne(id);
         const trackProject = await track.project;
         const authProjects = await user.projects;
-        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id)
+        const project = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id);
 
         if (!project) {
             throw new Forbidden('You cannot access to the asked data');
@@ -152,7 +221,7 @@ export default class TracksController {
             const workflow = workflowRepository.create({ title, expectedStartDate, tasks });
             track.workflow = Promise.resolve(workflow);
             trackRepository.save(track);
-            ctx.created({ data: track });
+            ctx.created({ data: workflow });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
                 throw new BadRequest('There was a problem creating the workflow');

@@ -14,20 +14,24 @@ export default class WorkflowsController {
 
     /**
      * @swagger
-     * /workflows:
+     * /worflows:
      *  get:
      *      tags:
      *          - Workflows
-     *      summary: Returns workflows for the connected user.
+     *      summary: Access workflows for the connected user.
+     *      security:
+     *          - auth: []
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Workflow"
+     *                  type: array
+     *                  items:
+     *                      $ref: "#/components/schemas/Workflow"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async list(ctx: DefaultContext) {
         const user: User = ctx.state.user;
@@ -50,6 +54,33 @@ export default class WorkflowsController {
         }
     }
 
+    /**
+     * @swagger
+     * /workflows/{id}:
+     *  get:
+     *      tags:
+     *          - Workflows
+     *      summary: Access workflow data.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The worflow identifier
+     *            type: string
+     *      responses:
+     *          200:
+     *              description: Successful operation
+     *              schema:
+     *                  $ref: "#/components/schemas/Workflow"
+     *          401:
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
+     */
     public static async workflow(ctx: DefaultContext) {
         const { id } = ctx.request.params;
 
@@ -58,16 +89,16 @@ export default class WorkflowsController {
         const workflow = await workflowRepository.findOne(id);
 
         if (!workflow) {
-            throw new Forbidden("You cannot access to the asked data");
+            throw new Forbidden('You cannot access to the asked data');
         }
 
         const track = await workflow.track;
         const trackProject = await track.project;
         const authProjects = await user.projects;
-        const workflowProject = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id)
-        
+        const workflowProject = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id);
+
         if (!workflowProject) {
-            throw new Forbidden("You cannot access to the asked data");
+            throw new Forbidden('You cannot access to the asked data');
         }
 
         try {
@@ -77,12 +108,59 @@ export default class WorkflowsController {
         }
     }
 
+    /**
+     * @swagger
+     * /worflows/{id}:
+     *  put:
+     *      tags:
+     *          - Workflows
+     *      summary: Update the workflow.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The worflow identifier
+     *            type: string
+     *          - name: title
+     *            in: body
+     *            description: The worflow description
+     *            type: string
+     *          - name: expectedStartDate
+     *            in: body
+     *            description: The worflow expected start date
+     *            type: string
+     *          - name: startDate
+     *            in: body
+     *            description: The worflow start date
+     *            type: string
+     *          - name: tasks
+     *            in: body
+     *            description: The tasks
+     *            type: array
+     *            items:
+     *                  $ref: "#/components/schemas/Task"
+     *      responses:
+     *          200:
+     *              description: Successful operation
+     *              schema:
+     *                  $ref: "#/components/schemas/Workflow"
+     *          400:
+     *              $ref: "#/components/responses/BadRequest"
+     *          401:
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
+     */
     public static async updateWorkflow(ctx: DefaultContext) {
         const { id } = ctx.request.params;
         const { title, expectedStartDate, startDate, tasks } = ctx.request.body;
-        
+
         ctx.validate({ title, expectedStartDate, startDate, tasks }, {
-            title: ['required'],
+            title: [],
             expectedStartDate: ['date'],
             startDate: ['date'],
             tasks: ['array'],
@@ -96,16 +174,16 @@ export default class WorkflowsController {
         const workflow = await workflowRepository.findOne(id);
 
         if (!workflow) {
-            throw new Forbidden("You cannot access to the asked data");
+            throw new Forbidden('You cannot access to the asked data');
         }
 
         const track = await workflow.track;
         const trackProject = await track.project;
         const authProjects = await user.projects;
-        const workflowProject = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id)
-        
+        const workflowProject = _.find(authProjects, (authProject: Project) => authProject.id === trackProject.id);
+
         if (!workflowProject) {
-            throw new Forbidden("You cannot access to the asked data");
+            throw new Forbidden('You cannot access to the asked data');
         }
 
         try {

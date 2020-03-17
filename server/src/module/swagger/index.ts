@@ -16,8 +16,8 @@ const servers: Array<string> = [];
 const definition: any = {
   openapi: '3.0.0',
   info,
+  basePath: '/api/v1',
   servers,
-  host: '/api/v1'
 };
 
 // Options for the swagger specification
@@ -28,6 +28,7 @@ const options: any = {
     path.join(__dirname, './tags.yaml'),
     path.join(__dirname, '../../controller/**/*.ts'),
     path.join(__dirname, '../../controller/**/*.js'),
+    path.join(__dirname, './template/security.yaml'),
     path.join(__dirname, './template/schemas.yaml'),
     path.join(__dirname, './template/headers.yaml'),
     path.join(__dirname, './template/parameters.yaml'),

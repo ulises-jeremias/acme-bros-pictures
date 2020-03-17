@@ -14,15 +14,19 @@ export default class ProjectsController {
      *      tags:
      *          - Projects
      *      summary: Access projects for the connected user.
+     *      security:
+     *          - auth: []
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Project"
+     *                  type: array
+     *                  items:
+     *                      $ref: "#/components/schemas/Project"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async list(ctx: DefaultContext) {
         const user: User = ctx.state.user;
@@ -36,20 +40,30 @@ export default class ProjectsController {
 
     /**
      * @swagger
-     * /projects/:id/tracks:
+     * /projects/{id}:
      *  get:
      *      tags:
      *          - Projects
      *      summary: Access project data.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The project identifier
+     *            type: string
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
      *                  $ref: "#/components/schemas/Project"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async project(ctx: DefaultContext) {
         const { id } = ctx.request.params;
@@ -67,20 +81,32 @@ export default class ProjectsController {
 
     /**
      * @swagger
-     * /projects/:id/tracks:
+     * /projects/{id}/tracks:
      *  get:
      *      tags:
      *          - Projects
      *      summary: Access tracks for the given project.
+     *      security:
+     *          - auth: []
+     *      parameters:
+     *          - name: id
+     *            in: path
+     *            required: true
+     *            description: The project identifier
+     *            type: string
      *      responses:
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Track"
+     *                  type: array
+     *                  items:
+     *                      $ref: "#/components/schemas/Track"
      *          401:
-     *              description: Unauthorized
-     *              schema:
-     *                  $ref: "#/components/responses/Unauthorized"
+     *              $ref: "#/components/responses/Unauthorized"
+     *          403:
+     *              $ref: "#/components/responses/Forbidden"
+     *          500:
+     *              $ref: "#/components/responses/InternalError"
      */
     public static async projectTracks(ctx: DefaultContext) {
         const { id } = ctx.request.params;
