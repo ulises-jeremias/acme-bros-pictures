@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToMany, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Project } from './Project';
 import { Song } from './Song';
 import { Workflow } from './Workflow';
@@ -29,4 +29,10 @@ export class Track {
     @OneToOne(type => Workflow, workflow => workflow.track, { cascade: ['update'] })
     @JoinColumn()
     workflow: Promise<Workflow>;
+
+    @CreateDateColumn()
+    createdAt?: Date;
+
+    @UpdateDateColumn()
+    updatedAt?: Date;
 }

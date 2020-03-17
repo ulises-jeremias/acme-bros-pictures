@@ -1,14 +1,28 @@
-import { Entity, Column, ManyToMany, PrimaryGeneratedColumn, JoinTable, JoinColumn } from "typeorm";
-import { User } from "./User";
-import { Project } from "./Project";
+import { Entity, Column, ManyToMany, PrimaryGeneratedColumn, JoinTable } from 'typeorm';
+import { User } from './User';
+import { Project } from './Project';
+
+export enum Watching {
+    NOT_WATCHING = 'not-watching',
+    RELEASES_ONLY = 'releases-only',
+    WATCHING = 'watching',
+    IGNORING = 'ignoring',
+}
+
+export const watchingOptions: Watching[] = [
+    Watching.NOT_WATCHING,
+    Watching.RELEASES_ONLY,
+    Watching.WATCHING,
+    Watching.IGNORING,
+];
 
 @Entity('user_project')
 export class UserProject {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
-    @Column()
-    isActive: boolean;
+    @Column({ type: 'enum', enum: Watching, default: Watching.WATCHING })
+    watching: Watching;
 
     @ManyToMany(type => User, user => user.projects, { primary: true })
     @JoinTable()

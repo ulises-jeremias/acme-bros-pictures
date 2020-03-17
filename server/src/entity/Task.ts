@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, JoinTable, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, JoinTable, ManyToOne, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Workflow } from './Workflow';
 
 export enum TaskStatus {
@@ -6,7 +6,7 @@ export enum TaskStatus {
     RUNNING = 'running',
     SUCCESS = 'success',
     FAILED = 'failed',
-};
+}
 
 export const taskStatusValues: TaskStatus[] = [
     TaskStatus.TODO,
@@ -21,10 +21,10 @@ export class Task {
     id: string;
 
     @Column('date')
-    startDate: Timestamp;
+    startDate?: Timestamp;
 
     @Column('date')
-    endDate: Timestamp;
+    endDate?: Timestamp;
 
     @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
     status: TaskStatus;
@@ -35,4 +35,10 @@ export class Task {
     @OneToOne(type => Task)
     @JoinColumn()
     task: Task;
+
+    @CreateDateColumn()
+    createdAt?: Date;
+
+    @UpdateDateColumn()
+    updatedAt?: Date;
 }

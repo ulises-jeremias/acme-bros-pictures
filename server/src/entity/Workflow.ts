@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, OneToMany, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable, OneToMany, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { IsString } from 'class-validator';
 import { Track } from './Track';
 import { Task } from './Task';
@@ -23,5 +23,11 @@ export class Workflow {
     track: Promise<Track>;
 
     @OneToMany(type => Task, task => task.workflow, { cascade: ['insert'] })
-    tasks: Promise<Task[]>
+    tasks: Promise<Task[]>;
+
+    @CreateDateColumn()
+    createdAt?: Date;
+
+    @UpdateDateColumn()
+    updatedAt?: Date;
 }
