@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinTable
 import { IsString } from 'class-validator';
 import { Track } from './Track';
 import { User } from './User';
+import { UserProject } from './UserProject';
 
 @Entity()
 export class Project {
@@ -15,8 +16,10 @@ export class Project {
     @ManyToOne(type => Track, track => track.project)
     tracks: Promise<Track[]>;
 
+    @OneToMany(type => UserProject, projectEmployee => projectEmployee.project)
+    projectEmployees: Promise<UserProject[]>;
+
     @ManyToMany(type => User, employee => employee.projects)
-    @JoinTable()
     employees: Promise<User[]>;
 
     @CreateDateColumn()

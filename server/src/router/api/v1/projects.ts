@@ -8,6 +8,7 @@ const requireAuth = passport.authenticate('jwt', { failWithError: true });
 
 router
     .get('/', requireAuth, projects.list)
+    .post('/', requireAuth, projects.createProject)
     .get('/:id', requireAuth, projects.project)
     .get('/:id/tracks', requireAuth, projects.projectTracks)
 ;

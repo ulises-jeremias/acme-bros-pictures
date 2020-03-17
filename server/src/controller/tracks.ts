@@ -78,7 +78,7 @@ export default class TracksController {
      *              $ref: "#/components/responses/InternalError"
      */
     public static async track(ctx: DefaultContext) {
-        const { id } = ctx.request.params;
+        const { id } = ctx.params;
         const user: User = ctx.state.user;
 
         const trackRepository = getRepository(Track);
@@ -125,7 +125,7 @@ export default class TracksController {
      *              $ref: "#/components/responses/InternalError"
      */
     public static async trackWorkflow(ctx: DefaultContext) {
-        const { id } = ctx.request.params;
+        const { id } = ctx.params;
         const user: User = ctx.state.user;
 
         const trackRepository = getRepository(Track);
@@ -191,10 +191,10 @@ export default class TracksController {
      *              $ref: "#/components/responses/InternalError"
      */
     public static async createTrackWorkflow(ctx: DefaultContext) {
-        const { id } = ctx.request.params;
+        const { id } = ctx.params;
         const { title, expectedStartDate, tasks } = ctx.request.body;
 
-        ctx.validate({ title, expectedStartDate, tasks }, {
+        await ctx.validate({ title, expectedStartDate, tasks }, {
             title: ['required'],
             expectedStartDate: ['required', 'date'],
             tasks: ['array'],
@@ -220,7 +220,7 @@ export default class TracksController {
         try {
             const workflow = workflowRepository.create({ title, expectedStartDate, tasks });
             track.workflow = Promise.resolve(workflow);
-            trackRepository.save(track);
+            await trackRepository.save(track);
             ctx.created({ data: workflow });
         } catch (err) {
             if (err.name === 'QueryFailedError') {

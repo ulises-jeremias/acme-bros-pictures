@@ -65,7 +65,9 @@ export default class AuthController {
      *              $ref: "#/components/responses/Unauthorized"
      */
     public static async me(ctx: DefaultContext) {
-        ctx.ok({ data: ctx.state.user });
+        const user: User = ctx.state.user;
+        delete user.password;
+        ctx.ok({ data: user });
     }
 
     public static async register(ctx: DefaultContext) {

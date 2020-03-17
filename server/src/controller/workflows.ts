@@ -82,7 +82,7 @@ export default class WorkflowsController {
      *              $ref: "#/components/responses/InternalError"
      */
     public static async workflow(ctx: DefaultContext) {
-        const { id } = ctx.request.params;
+        const { id } = ctx.params;
 
         const user: User = ctx.state.user;
         const workflowRepository = getRepository(Workflow);
@@ -141,6 +141,12 @@ export default class WorkflowsController {
      *            type: array
      *            items:
      *                  $ref: "#/components/schemas/Task"
+     *          - name: current
+     *            in: body
+     *            description: The current task
+     *            type: object
+     *            schema:
+     *                  $ref: "#/components/schemas/Task"
      *      responses:
      *          200:
      *              description: Successful operation
@@ -156,10 +162,10 @@ export default class WorkflowsController {
      *              $ref: "#/components/responses/InternalError"
      */
     public static async updateWorkflow(ctx: DefaultContext) {
-        const { id } = ctx.request.params;
+        const { id } = ctx.params;
         const { title, expectedStartDate, startDate, tasks } = ctx.request.body;
 
-        ctx.validate({ title, expectedStartDate, startDate, tasks }, {
+        await ctx.validate({ title, expectedStartDate, startDate, tasks }, {
             title: [],
             expectedStartDate: ['date'],
             startDate: ['date'],
@@ -167,6 +173,9 @@ export default class WorkflowsController {
             'tasks.*.status': [`in:${taskStatusValues.join(',')}`],
             'tasks.*.startDate': ['date'],
             'tasks.*.endDate': ['date'],
+            'current.status': [`in:${taskStatusValues.join(',')}`],
+            'current.startDate': ['date'],
+            'current.endDate': ['date'],
         });
 
         const user: User = ctx.state.user;

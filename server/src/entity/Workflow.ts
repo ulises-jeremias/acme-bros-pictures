@@ -22,8 +22,12 @@ export class Workflow {
     @JoinColumn()
     track: Promise<Track>;
 
-    @OneToMany(type => Task, task => task.workflow, { cascade: ['insert'] })
+    @OneToMany(type => Task, task => task.workflow, { cascade: ['insert', 'update'] })
     tasks: Promise<Task[]>;
+
+    @OneToOne(type => Task, task => task.workflow, { cascade: ['update'] })
+    @JoinColumn()
+    current: Promise<Task>;
 
     @CreateDateColumn()
     createdAt?: Date;

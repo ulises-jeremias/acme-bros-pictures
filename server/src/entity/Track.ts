@@ -23,7 +23,7 @@ export class Track {
     @OneToMany(type => Project, project => project.tracks)
     project: Promise<Project>;
 
-    @OneToMany(type => Song, song => song.tracks)
+    @OneToMany(type => Song, song => song.tracks, { cascade: ['insert', 'update'] })
     song: Promise<Song>;
 
     @OneToOne(type => Workflow, workflow => workflow.track, { cascade: ['update'] })

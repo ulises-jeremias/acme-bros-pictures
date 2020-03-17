@@ -146,6 +146,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Task'
+        current:
+          $ref: '#/components/schemas/Task'
         createdAt:
           type: string
         updatedAt:

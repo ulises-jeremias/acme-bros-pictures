@@ -5,7 +5,7 @@ import config from '../config';
 
 const parentDir = path.join(__dirname, '..');
 
-const connectionOpts: ConnectionOptions = {
+export const connectionOpts: ConnectionOptions = {
     type: 'postgres',
     host: config.db.host,
     port: config.db.port as number,

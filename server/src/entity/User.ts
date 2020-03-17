@@ -36,20 +36,21 @@ export class User {
     updatedAt?: Date;
 
     @OneToMany(type => UserProject, userProject => userProject.user)
+    @JoinTable({
+      name: 'user_project',
+      joinColumn: {
+          name: 'user_id',
+          referencedColumnName: 'id',
+      },
+      inverseJoinColumn: {
+          name: 'project_id',
+          referencedColumnName: 'id',
+      },
+    })
     userProjects: Promise<UserProject[]>;
 
     @ManyToMany(type => Project, project => project.employees)
-    @JoinTable({
-        name: 'user_project',
-        joinColumn: {
-          name: 'user_id',
-          referencedColumnName: 'id',
-        },
-        inverseJoinColumn: {
-          name: 'project_id',
-          referencedColumnName: 'id',
-        },
-      })
+    @JoinTable()
     projects: Promise<Project[]>;
 
     public async checkPassword(plainPassword: string): Promise<boolean> {

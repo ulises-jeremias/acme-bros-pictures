@@ -34,7 +34,7 @@ export class Task {
 
     @OneToOne(type => Task)
     @JoinColumn()
-    task: Task;
+    next: Task;
 
     @CreateDateColumn()
     createdAt?: Date;

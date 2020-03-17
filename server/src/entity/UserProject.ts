@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToMany, PrimaryGeneratedColumn, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { User } from './User';
 import { Project } from './Project';
 
@@ -24,11 +24,11 @@ export class UserProject {
     @Column({ type: 'enum', enum: Watching, default: Watching.WATCHING })
     watching: Watching;
 
-    @ManyToMany(type => User, user => user.projects, { primary: true })
-    @JoinTable()
+    @JoinColumn({ name: 'user_id' })
+    @ManyToOne(type => User, user => user.projects, { primary: true })
     user: User;
 
-    @ManyToMany(type => Project, project => project.employees, { primary: true })
-    @JoinTable()
+    @JoinColumn({ name: 'project_id' })
+    @ManyToOne(type => Project, project => project.employees, { primary: true })
     project: Project;
 }

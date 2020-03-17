@@ -4,12 +4,23 @@ import commander from 'commander';
 import path from 'path';
 import fs from 'fs';
 
-import { Database } from './module/db';
+import { connectionOpts, Database } from './module/db';
 import config from './config';
 
 const database = new Database();
 
 commander.version('0.0.1', '-v --version');
+
+commander
+  .command('create:config')
+  .description('Creates ormconfig.json file from env config')
+  .action(() => {
+    try {
+      fs.writeFileSync('ormconfig.json', JSON.stringify(connectionOpts, null, 4));
+    } catch (err) {
+      console.log(err)
+    }
+  });
 
 commander
   .command('db:reset')
