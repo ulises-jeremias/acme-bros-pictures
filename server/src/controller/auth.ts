@@ -1,3 +1,4 @@
+const _ = require('underscore');
 const jwt = require('jsonwebtoken');
 
 import { DefaultContext } from 'koa';
@@ -66,7 +67,6 @@ export default class AuthController {
      */
     public static async me(ctx: DefaultContext) {
         const user: User = ctx.state.user;
-        delete user.password;
         ctx.ok({ data: user });
     }
 
@@ -92,8 +92,7 @@ export default class AuthController {
 
         try {
             const createdUser: User = await userRepository.save(newUser);
-            delete createdUser.password;
-            return ctx.created({ data: createdUser });
+            return ctx.created({ data: _.omit(createdUser, 'password') });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
                 throw new UserAlreadyExists('User with this credentials already exists');

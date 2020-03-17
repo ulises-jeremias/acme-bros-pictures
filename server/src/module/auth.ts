@@ -1,3 +1,4 @@
+const _ = require('underscore');
 const passport = require('koa-passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
@@ -24,8 +25,12 @@ const fetchUser = (() => {
     // Here settings could be used once
     return async function(username: string): Promise<User> {
         const userRepository = getRepository(User);
-        const user = await userRepository.findOne({ username: Equal(username) });
-        return user;
+        return await userRepository
+            .createQueryBuilder('user')
+            .addSelect('user.password')
+            .addSelect('user.username')
+            .where('user.username = :username', { username })
+            .getOne()
     };
 })();
 
@@ -36,7 +41,7 @@ passport.serializeUser((user: User, done: SerializeUserFn<string>) => {
 passport.deserializeUser(async (username: string, done: DeserializeUserFn<User>) => {
     try {
       const user = await fetchUser(username);
-      done(null, user);
+      done(null, _.omit(user, 'password'));
     } catch (err) {
       done(err);
     }
@@ -51,7 +56,7 @@ passport.use(new LocalStrategy(localOptions, async (username: string, password: 
 
         const checked = await user.checkPassword(password);
         if (checked) {
-            done(null, user);
+            done(null, _.omit(user, 'password'));
         } else {
             done(null, false);
         }
@@ -65,7 +70,7 @@ passport.use(new JwtStrategy(jwtOptions, async (jwtPayload: { user: string }, do
         const user = await fetchUser(jwtPayload.user);
 
         if (user) {
-            done(null, user);
+            done(null, _.omit(user, 'password'));
         } else {
             done(null, false);
         }

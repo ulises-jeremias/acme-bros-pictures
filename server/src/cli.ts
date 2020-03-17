@@ -18,7 +18,7 @@ commander
     try {
       fs.writeFileSync('ormconfig.json', JSON.stringify(connectionOpts, null, 4));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   });
 

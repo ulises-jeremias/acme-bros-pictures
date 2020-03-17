@@ -20,7 +20,7 @@ export class User {
     @IsNotEmpty()
     username: string;
 
-    @Column()
+    @Column({ select: false })
     @IsString()
     @IsNotEmpty()
     password: string;
@@ -37,15 +37,15 @@ export class User {
 
     @OneToMany(type => UserProject, userProject => userProject.user)
     @JoinTable({
-      name: 'user_project',
-      joinColumn: {
-          name: 'user_id',
-          referencedColumnName: 'id',
-      },
-      inverseJoinColumn: {
-          name: 'project_id',
-          referencedColumnName: 'id',
-      },
+        name: 'user_project',
+        joinColumn: {
+            name: 'user_id',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'project_id',
+            referencedColumnName: 'id',
+        },
     })
     userProjects: Promise<UserProject[]>;
 

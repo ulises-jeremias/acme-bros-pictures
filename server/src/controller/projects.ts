@@ -5,6 +5,7 @@ import { DefaultContext } from 'koa';
 import { InternalError, Forbidden, BadRequest } from '../constant/errors';
 import { User } from '../entity/User';
 import { Project } from '../entity/Project';
+import { UserProject, Watching } from '../entity/UserProject';
 
 export default class ProjectsController {
 
@@ -31,11 +32,15 @@ export default class ProjectsController {
      */
     public static async list(ctx: DefaultContext) {
         const user: User = ctx.state.user;
-
+        const userProjectRepository = getRepository(UserProject);
 
         try {
-            const projects = await user.projects;
-            ctx.ok({ data: projects });
+            const projects = await userProjectRepository.find({ user });
+            const results = _.map(projects, (project: UserProject) => ({
+                watching: project.watching,
+                project: project.project,
+            }));
+            ctx.ok({ data: results });
         } catch (err) {
             throw new InternalError(err);
         }
@@ -72,17 +77,23 @@ export default class ProjectsController {
         const { id } = ctx.params;
         const user: User = ctx.state.user;
 
-        const authProjects = await user.projects;
-        const project: Project = _.find(authProjects, (authProject: Project) => authProject.id === id);
+        const userProjectRepository = getRepository(UserProject);
 
-        if (!project) {
+        const userProjects = await userProjectRepository.find({ user });
+        const userProject: UserProject = _.find(
+            userProjects,
+            (userProject: UserProject) => userProject.project.id === id
+        );
+
+        if (!userProject) {
             throw new Forbidden('You cannot access to the asked data');
         }
 
-        (await project.employees).map((user: User) => delete user.password);
+        const { watching, project } = userProject;
+        await project.employees;
         await project.tracks;
 
-        ctx.ok({ data: project });
+        ctx.ok({ data: { watching, project } });
     }
 
     /**
@@ -129,17 +140,31 @@ export default class ProjectsController {
 
         const projectRepository = getRepository(Project);
         const userRepository = getRepository(User);
+        const userProjectRepository = getRepository(UserProject);
+
+        const existingEmployees: User[] = await userRepository
+            .find({
+                where: { id: In(_.map(employees, (data: { id: string }) => data.id)) }
+            });
 
         try {
-            const existingEmployees: User[] = await userRepository
-                .find({
-                    where: { id: In(employees.map((data: { id: string }) => data.id)) }
-                });
-
             const project = projectRepository.create({ name });
             project.employees = Promise.resolve(existingEmployees);
-            const createdProject: Project = await projectRepository.save(project);
-            (await createdProject.employees).map((user: User) => delete user.password);
+            const createdProject = await projectRepository.save(project);
+
+            const projectEmployees = _.map(
+                existingEmployees,
+                (emp: User) => userProjectRepository.create({ user: emp, project })
+            );
+
+            const createdProjectEmployees = await userProjectRepository.save(projectEmployees);
+
+            createdProject.projectEmployees = Promise.resolve(createdProjectEmployees);
+            await projectRepository.save(createdProject);
+
+            await createdProject.employees;
+            await createdProject.projectEmployees;
+
             ctx.created({ data: createdProject });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
