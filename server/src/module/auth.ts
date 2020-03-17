@@ -30,7 +30,7 @@ const fetchUser = (() => {
             .addSelect('user.password')
             .addSelect('user.username')
             .where('user.username = :username', { username })
-            .getOne()
+            .getOne();
     };
 })();
 
