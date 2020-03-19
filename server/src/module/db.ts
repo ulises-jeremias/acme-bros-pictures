@@ -55,7 +55,6 @@ export class Database implements IDatabase {
     public async reset() {
         await this.connection.dropDatabase();
         await this.connection.runMigrations();
-        await this.connection.showMigrations();
     }
 
     public async runMigrations() {
