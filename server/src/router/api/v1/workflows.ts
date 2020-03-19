@@ -8,6 +8,7 @@ const requireAuth = passport.authenticate('jwt', { failWithError: true });
 
 router
     .get('/', requireAuth, workflows.list)
+    .post('/', requireAuth, workflows.createWorkflow)
     .get('/:id', requireAuth, workflows.workflow)
     .put('/:id', requireAuth, workflows.updateWorkflow)
 ;
