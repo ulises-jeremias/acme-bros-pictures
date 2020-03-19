@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
   Grid,
@@ -35,6 +36,10 @@ const LoginContainer = (props) => {
       </Grid.Column>
     </Grid>
   );
+};
+
+LoginContainer.propTypes = {
+  translate: PropTypes.func.isRequired,
 };
 
 export default LoginContainer;

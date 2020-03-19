@@ -12,6 +12,18 @@ export const dateFormat = (date) => {
     .replace(/^(\d\d\/\d\d)(\d+)$/g, '$1/$2');
 };
 
+export const timeFormat = (time) => {
+  const timeStr = String(time || '');
+
+  if (!timeStr) {
+    return timeStr;
+  }
+
+  return String(timeStr.slice(0, 10) || '')
+    .replace(/^(\d\d)(\d)$/g, '$1:$2')
+    .replace(/^(\d\d:\d\d)(\d+)$/g, '$1:$2');
+};
+
 export const dateTimeFormat = (date) => {
   const dateStr = String(date || '');
 
@@ -69,6 +81,7 @@ const validDateConditions = {
 
 export default {
   dateFormat,
+  timeFormat,
   dateTimeFormat,
   validDateCondition,
   validTimeCondition,

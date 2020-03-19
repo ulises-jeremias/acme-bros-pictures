@@ -24,11 +24,11 @@ i18n
   .use(LanguageDetector)
   .use(reactI18nextModule)
   .init({
-    fallbackLng: 'es',
+    fallbackLng: 'en',
 
     // have a common namespace used around the full app
-    ns: ['home', 'error', 'common', 'login', 'sidebar'],
-    defaultNS: 'home',
+    ns: ['error', 'common', 'login', 'navbar', 'sidebar', 'projects', 'tracks', 'workflows'],
+    defaultNS: 'common',
 
     debug: process.env.NODE_ENV === 'development',
 

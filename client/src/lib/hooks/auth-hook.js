@@ -19,10 +19,8 @@ export const useAuth = (opt = {}) => {
   useEffect(() => {
     setUserInfo(user);
 
-    if (opt.authOnly) {
-      if (!isAuth) {
-        setRedirect('/logout');
-      }
+    if (opt.authOnly && !isAuth) {
+      setRedirect('/logout');
     }
   }, [isAuth, token]);
 

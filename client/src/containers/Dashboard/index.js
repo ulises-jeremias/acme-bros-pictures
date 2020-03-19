@@ -4,35 +4,31 @@ import { Redirect } from 'react-router-dom';
 
 import { useAuth } from 'app/lib/hooks/auth-hook';
 
-import LoginContainer from './LoginContainer';
+import DashboardContainer from './DashboardContainer';
 
-const AuthorizedLoginContainer = (props) => {
+const AuthorizedDashboardContainer = (props) => {
   const {
     authOnly,
     redirect,
   } = props;
 
-  const { isAuth, nextRoute } = useAuth({ authOnly, redirect });
+  const { nextRoute, user } = useAuth({ authOnly, redirect });
 
   if (nextRoute) {
     return <Redirect to={nextRoute} />;
   }
 
-  if (isAuth) {
-    return <Redirect to="/" />;
-  }
-
-  return <LoginContainer {...props} />;
+  return <DashboardContainer {...props} user={user} />;
 };
 
-AuthorizedLoginContainer.defaultProps = {
+AuthorizedDashboardContainer.defaultProps = {
   authOnly: false,
   redirect: '',
 };
 
-AuthorizedLoginContainer.propTypes = {
+AuthorizedDashboardContainer.propTypes = {
   authOnly: PropTypes.bool,
   redirect: PropTypes.string,
 };
 
-export default AuthorizedLoginContainer;
+export default AuthorizedDashboardContainer;
