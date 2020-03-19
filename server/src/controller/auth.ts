@@ -38,7 +38,14 @@ export default class AuthController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: string
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: string
+     *                          example: JWT iAmAToken
      *          400:
      *              description: Invalid username/password supplied
      *
@@ -61,7 +68,14 @@ export default class AuthController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/User"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/User"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      */

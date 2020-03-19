@@ -37,9 +37,15 @@ export default class TracksController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: array
-     *                  items:
-     *                      $ref: "#/components/schemas/Track"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: array
+     *                          items:
+     *                              $ref: "#/components/schemas/Track"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          500:
@@ -89,7 +95,14 @@ export default class TracksController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Track"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/Track"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          403:
@@ -163,7 +176,14 @@ export default class TracksController {
      *          201:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Track"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/Track"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          403:
@@ -247,9 +267,15 @@ export default class TracksController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: array
-     *                  items:
-     *                      $ref: "#/components/schemas/Workflow"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: array
+     *                          items:
+     *                              $ref: "#/components/schemas/Workflow"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          403:

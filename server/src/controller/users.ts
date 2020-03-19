@@ -20,9 +20,15 @@ export default class UsersController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: array
-     *                  items:
-     *                      $ref: "#/components/schemas/User"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: array
+     *                          items:
+     *                              $ref: "#/components/schemas/User"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          500:

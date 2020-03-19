@@ -29,7 +29,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: string
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: string
+                example: JWT iAmAToken
         '400':
           description: Invalid username/password supplied
   "/auth/me":
@@ -43,7 +50,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/User"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/User"
         '401':
           "$ref": "#/components/responses/Unauthorized"
   "/":
@@ -70,9 +84,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Project"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Project"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -100,7 +120,14 @@ paths:
         '201':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Project"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Project"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -124,7 +151,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Project"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Project"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -168,9 +202,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Song"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Song"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -186,9 +226,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Task"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Task"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -224,7 +270,14 @@ paths:
         '201':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Task"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Task"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -248,7 +301,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Task"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Task"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -284,7 +344,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Task"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Task"
         '400':
           "$ref": "#/components/responses/BadRequest"
         '401':
@@ -304,9 +371,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Track"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Track"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -349,7 +422,14 @@ paths:
         '201':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Track"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Track"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -373,7 +453,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Track"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Track"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -397,9 +484,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Workflow"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Workflow"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -417,9 +510,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/User"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/User"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -435,9 +534,15 @@ paths:
         '200':
           description: Successful operation
           schema:
-            type: array
-            items:
-              "$ref": "#/components/schemas/Workflow"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Workflow"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '500':
@@ -468,7 +573,14 @@ paths:
         '201':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Workflow"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Workflow"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -492,7 +604,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Workflow"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Workflow"
         '401':
           "$ref": "#/components/responses/Unauthorized"
         '403':
@@ -523,7 +642,14 @@ paths:
         '200':
           description: Successful operation
           schema:
-            "$ref": "#/components/schemas/Workflow"
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                "$ref": "#/components/schemas/Workflow"
         '400':
           "$ref": "#/components/responses/BadRequest"
         '401':

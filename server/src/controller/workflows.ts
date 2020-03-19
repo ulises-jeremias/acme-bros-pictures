@@ -25,9 +25,15 @@ export default class WorkflowsController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: array
-     *                  items:
-     *                      $ref: "#/components/schemas/Workflow"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: array
+     *                          items:
+     *                              $ref: "#/components/schemas/Workflow"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          500:
@@ -83,7 +89,14 @@ export default class WorkflowsController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Workflow"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/Workflow"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          403:
@@ -159,7 +172,14 @@ export default class WorkflowsController {
      *          201:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Workflow"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/Workflow"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          403:
@@ -246,7 +266,14 @@ export default class WorkflowsController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  $ref: "#/components/schemas/Workflow"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: object
+     *                          $ref: "#/components/schemas/Workflow"
      *          400:
      *              $ref: "#/components/responses/BadRequest"
      *          401:

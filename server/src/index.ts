@@ -10,6 +10,7 @@ const database = new Database();
 (async () => {
     try {
         await database.connect();
+        await database.runMigrations();
         app.listen(config.server.port, () => console.log('APP listening at port %d', config.server.port));
 
         process.on('SIGINT', async () => {

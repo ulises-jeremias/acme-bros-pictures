@@ -20,9 +20,15 @@ export default class SongsController {
      *          200:
      *              description: Successful operation
      *              schema:
-     *                  type: array
-     *                  items:
-     *                      $ref: "#/components/schemas/Song"
+     *                  type: object
+     *                  properties:
+     *                      status:
+     *                          type: string
+     *                          example: success
+     *                      data:
+     *                          type: array
+     *                          items:
+     *                              $ref: "#/components/schemas/Song"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          500:

@@ -1,4 +1,7 @@
-# acme-bros-pictures-api
+<span><img width="155" src="./static/logo.png">
+
+# ACME BROS Pictures API
+
 REST API using NodeJS and Koa2, Typescript. TypeORM with class-validator, SQL CRUD. Docker.
 
 ## Version: 1.0.0
@@ -24,7 +27,7 @@ Logs user into the system.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | string |
+| 200 | Successful operation | object |
 | 400 | Invalid username/password supplied |  |
 
 ### /auth/me
@@ -38,7 +41,7 @@ Access profile info.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [User](#user) |
+| 200 | Successful operation | object |
 | 401 |  |  |
 
 ##### Security
@@ -71,7 +74,7 @@ Access projects for the connected user.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Project](#project) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -97,7 +100,7 @@ Create the project.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 201 | Successful operation | [Project](#project) |
+| 201 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -125,7 +128,7 @@ Access project data.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Project](#project) |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -175,7 +178,7 @@ Access available songs.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Song](#song) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -196,7 +199,7 @@ Access tasks for the connected user.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Task](#task) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -223,7 +226,7 @@ Create the task for the given track.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 201 | Successful operation | [Task](#task) |
+| 201 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -251,7 +254,7 @@ Access task data.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Task](#task) |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -279,7 +282,7 @@ Update the task.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Task](#task) |
+| 200 | Successful operation | object |
 | 400 |  |  |
 | 401 |  |  |
 | 403 |  |  |
@@ -302,7 +305,7 @@ Access tracks for the connected user.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Track](#track) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -332,7 +335,7 @@ Create the track for the given data.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 201 | Successful operation | [Track](#track) |
+| 201 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -360,7 +363,7 @@ Access track data.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Track](#track) |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -388,7 +391,7 @@ Access workflow for the given track.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Workflow](#workflow) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -410,7 +413,7 @@ Access available users.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [User](#user) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -431,7 +434,7 @@ Access workflows for the connected user.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [ [Workflow](#workflow) ] |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 500 |  |  |
 
@@ -458,7 +461,7 @@ Create the workflow for the given track.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 201 | Successful operation | [Workflow](#workflow) |
+| 201 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -486,7 +489,7 @@ Access workflow data.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Workflow](#workflow) |
+| 200 | Successful operation | object |
 | 401 |  |  |
 | 403 |  |  |
 | 500 |  |  |
@@ -514,7 +517,7 @@ Update the workflow.
 
 | Code | Description | Schema |
 | ---- | ----------- | ------ |
-| 200 | Successful operation | [Workflow](#workflow) |
+| 200 | Successful operation | object |
 | 400 |  |  |
 | 401 |  |  |
 | 403 |  |  |
