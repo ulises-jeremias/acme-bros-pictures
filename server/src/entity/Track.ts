@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToMany, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Timestamp, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { Project } from './Project';
 import { Song } from './Song';
 import { Workflow } from './Workflow';
@@ -8,27 +8,30 @@ export class Track {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('timestamp')
-    startTime: Timestamp;
+    @Column()
+    startTime: String;
 
-    @Column('timestamp')
-    endTime: Timestamp;
+    @Column()
+    endTime: String;
 
-    @Column('timestamp')
-    songStartTime: Timestamp;
+    @Column()
+    songStartTime: String;
 
-    @Column('timestamp')
-    songEndTime: Timestamp;
+    @Column()
+    songEndTime: String;
 
-    @OneToMany(type => Project, project => project.tracks)
+    @ManyToOne(type => Project, project => project.tracks)
     project: Promise<Project>;
+    projectId: string;
 
-    @OneToMany(type => Song, song => song.tracks, { cascade: ['insert', 'update'] })
+    @ManyToOne(type => Song, song => song.tracks)
     song: Promise<Song>;
+    songId: string;
 
-    @OneToOne(type => Workflow, workflow => workflow.track, { cascade: ['update'] })
+    @OneToOne(type => Workflow, workflow => workflow.track)
     @JoinColumn()
     workflow: Promise<Workflow>;
+    workflowId: string;
 
     @CreateDateColumn()
     createdAt?: Date;

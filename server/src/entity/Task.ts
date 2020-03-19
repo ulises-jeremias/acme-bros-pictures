@@ -20,21 +20,15 @@ export class Task {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('date')
-    startDate?: Timestamp;
-
-    @Column('date')
-    endDate?: Timestamp;
+    @Column()
+    description: string;
 
     @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
     status: TaskStatus;
 
     @ManyToOne(type => Workflow, workflow => workflow.tasks)
     workflow: Promise<Workflow>;
-
-    @OneToOne(type => Task)
-    @JoinColumn()
-    next: Task;
+    workflowId: string;
 
     @CreateDateColumn()
     createdAt?: Date;

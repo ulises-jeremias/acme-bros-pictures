@@ -49,10 +49,6 @@ export class User {
     })
     userProjects: Promise<UserProject[]>;
 
-    @ManyToMany(type => Project, project => project.employees)
-    @JoinTable()
-    projects: Promise<Project[]>;
-
     public async checkPassword(plainPassword: string): Promise<boolean> {
         return await compare(plainPassword, this.password);
     }

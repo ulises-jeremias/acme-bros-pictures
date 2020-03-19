@@ -3,9 +3,11 @@ tags:
   description: Auth endpoints
 - name: Projects
   description: Projects management for a connected user
-- name: Tracks
-  description: Tracks endpoints for the different projects
 - name: Songs
   description: Songs endpoints
+- name: Tracks
+  description: Tracks endpoints for the different projects
+- name: Users
+  description: Users endpoints
 - name: Workflows
   description: Workflows endpoints

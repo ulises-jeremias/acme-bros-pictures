@@ -25,10 +25,10 @@ export class UserProject {
     watching: Watching;
 
     @JoinColumn({ name: 'user_id' })
-    @ManyToOne(type => User, user => user.projects, { primary: true, eager: true })
+    @ManyToOne(type => User, user => user.userProjects, { primary: true, eager: true })
     user: User;
 
     @JoinColumn({ name: 'project_id' })
-    @ManyToOne(type => Project, project => project.employees, { primary: true, eager: true })
+    @ManyToOne(type => Project, project => project.projectEmployees, { primary: true, eager: true })
     project: Project;
 }

@@ -10,24 +10,18 @@ export class Workflow {
 
     @Column()
     @IsString()
-    title: string;
+    description: string;
 
     @Column('date')
     expectedStartDate: Date;
 
-    @Column('date')
-    startDate?: Date;
-
     @OneToOne(type => Track, track => track.workflow)
     @JoinColumn()
     track: Promise<Track>;
+    trackId: string;
 
-    @OneToMany(type => Task, task => task.workflow, { cascade: ['insert', 'update'] })
+    @OneToMany(type => Task, task => task.workflow)
     tasks: Promise<Task[]>;
-
-    @OneToOne(type => Task, task => task.workflow, { cascade: ['update'] })
-    @JoinColumn()
-    current: Promise<Task>;
 
     @CreateDateColumn()
     createdAt?: Date;

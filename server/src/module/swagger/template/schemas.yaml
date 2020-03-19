@@ -53,12 +53,6 @@ components:
       required:
         - status
       properties:
-        startDate:
-          type: string
-          example: 2020-01-23
-        endDate:
-          type: string
-          example: 2020-01-25
         status:
           type: string
           enum:
@@ -131,23 +125,19 @@ components:
     Workflow:
       type: object
       required:
-        - title
-        - expectedDate
+        - description
+        - expectedStartDate
         - track
       properties:
-        title:
+        description:
           type: string
           example: Workflow with independent group
         expectedStartDate:
-          type: string
-        startDate:
           type: string
         tasks:
           type: array
           items:
             $ref: '#/components/schemas/Task'
-        current:
-          $ref: '#/components/schemas/Task'
         createdAt:
           type: string
         updatedAt:

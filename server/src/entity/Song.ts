@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { IsString } from 'class-validator';
 import { Track } from './Track';
 
@@ -15,6 +15,6 @@ export class Song {
     @IsString()
     author: string;
 
-    @ManyToOne(type => Track, track => track.song)
+    @OneToMany(type => Track, track => track.song)
     tracks: Promise<Track[]>;
 }
