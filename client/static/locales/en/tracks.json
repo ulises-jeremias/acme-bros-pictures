@@ -1,0 +1,26 @@
+{
+  "create": {
+    "title": "Create track",
+    "song": {
+      "label": "Song",
+      "placeholder": "Enter a song in format: title;author"
+    },
+    "startTime": {
+      "label": "Start time",
+      "placeholder": "Enter the start time in movie"
+    },
+    "endTime": {
+      "label": "End time",
+      "placeholder": "Enter the end time in movie"
+    },
+    "songStartTime": {
+      "label": "Song start time",
+      "placeholder": "Enter the start time of the song"
+    },
+    "songEndTime": {
+      "label": "Song end time",
+      "placeholder": "Enter the end time of the song"
+    },
+    "sendButton": "Submit"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "create": {
+    "title": "Create workflow",
+    "description": {
+      "label": "Description",
+      "placeholder": "Enter the worflow's description"
+    },
+    "expectedStartDate": {
+      "label": "Expected start date",
+      "placeholder": "Enter the expected start date"
+    },
+    "sendButton": "Submit"
+  }
+}

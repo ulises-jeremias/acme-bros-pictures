@@ -2,8 +2,8 @@
   "title": "Log in",
   "sendButton": "Log in",
   "username": {
-    "label": "E-mail or username",
-    "placeholder": "E-mail or username"
+    "label": "Username",
+    "placeholder": "Username"
   },
   "password": {
     "label": "Password",

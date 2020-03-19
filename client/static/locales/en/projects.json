@@ -1,0 +1,40 @@
+{
+  "track": {
+    "startTime": "Start in movie",
+    "endTime": "End in movie",
+    "songStartTime": "Song start",
+    "songEndTime": "Song end",
+    "workflowStatus": {
+      "title": "Workflow status",
+      "status": {
+        "todo": "Todo",
+        "running": "Running",
+        "success": "Success",
+        "failed": "Failed",
+        "unknown": "Workflow"
+      }
+    },
+    "song": {
+      "title": "Title",
+      "author": "Author"
+    }
+  },
+  "project": {
+    "employees": "{{count}} employee",
+    "employees_plural": "{{count}} employees",
+    "tracks": "{{count}} track",
+    "tracks_plural": "{{count}} tracks"
+  },
+  "create": {
+    "title": "Create project",
+    "name": {
+      "label": "Movie",
+      "placeholder": "Enter the movie name"
+    },
+    "employees": {
+      "label": "Employees",
+      "placeholder": "Select employees"
+    },
+    "sendButton": "Submit"
+  }
+}
