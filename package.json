@@ -1,0 +1,11 @@
+{
+  "name": "acme-bros-pictures",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ulises-jeremias/acme-bros-pictures.git",
+  "author": "ulises-jeremias <ulisescf.24@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "heroku-postbuild": "yarn && yarn --cwd \"server/\" && yarn --cwd \"server/\" build"
+  }
+}
