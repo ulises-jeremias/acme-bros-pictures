@@ -5,11 +5,13 @@ import renderDateInputComponent from './DateInput';
 import renderInputComponent from './Input';
 import renderSelectComponent from './Select';
 import renderTextAreaComponent from './TextArea';
+import renderTimeInputComponent from './TimeInput';
 
 export const renderDateInput = renderDateInputComponent;
 export const renderInput = renderInputComponent;
 export const renderSelect = renderSelectComponent;
 export const renderTextArea = renderTextAreaComponent;
+export const renderTimeInput = renderTimeInputComponent;
 
 export const renderCheckbox = (field) => {
   if (field.labelPosition === 'top') {
@@ -55,4 +57,5 @@ export default {
   renderRadio,
   renderSelect,
   renderTextArea,
+  renderTimeInput,
 };

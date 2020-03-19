@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Select } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
+import { TimeInput } from 'semantic-ui-calendar-react';
+import { timeFormat as timeStrFormat } from 'app/helpers/date';
 
-const renderSelect = ({
+const renderTimeInput = ({
   meta: { touched, error, warning },
   input,
   label,
@@ -10,8 +12,8 @@ const renderSelect = ({
   disabled,
   required,
   inline,
+  dateFormat,
   width,
-  options,
   inputProps,
 }) => (
   <Form.Field
@@ -24,14 +26,15 @@ const renderSelect = ({
     <label>
       {label}
     </label>
-    <Select
-      search
+    <TimeInput
+      closable
+      clearable={!required}
       {...inputProps}
       name={input.name}
       value={input.value}
+      dateFormat={dateFormat}
       placeholder={placeholder}
-      options={options}
-      onChange={inputProps.readOnly ? undefined : (e, { value }) => input.onChange(value)}
+      onChange={(e, { value }) => input.onChange(timeStrFormat(value))}
     />
     <div>
       {touched
@@ -41,17 +44,18 @@ const renderSelect = ({
   </Form.Field>
 );
 
-renderSelect.defaultProps = {
+renderTimeInput.defaultProps = {
   disabled: false,
   required: false,
   inline: false,
   width: undefined,
   placeholder: undefined,
   inputProps: {},
+  dateFormat: 'hh:mm:ss',
   label: '',
 };
 
-renderSelect.propTypes = {
+renderTimeInput.propTypes = {
   /* Redux Form props */
   meta: PropTypes.shape({
     touched: PropTypes.bool,
@@ -66,8 +70,7 @@ renderSelect.propTypes = {
 
   /* React Semantic UI props */
   inputProps: PropTypes.shape({
-    /* Read semantic ui docs at https://react.semantic-ui.com/addons/select */
-    readOnly: PropTypes.bool,
+    /* Read semantic ui docs at https://react.semantic-ui.com/elements/input */
   }),
 
   /* Some controlled field and input props */
@@ -76,15 +79,11 @@ renderSelect.propTypes = {
   required: PropTypes.bool,
   inline: PropTypes.bool,
   placeholder: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string,
-    text: PropTypes.string,
-    value: PropTypes.any,
-  })).isRequired,
+  dateFormat: PropTypes.string,
   width: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
 };
 
-export default renderSelect;
+export default renderTimeInput;

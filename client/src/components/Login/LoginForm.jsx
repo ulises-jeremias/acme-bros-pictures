@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import PropTypes from 'prop-types';
 import {
   Header,
   Form,
@@ -19,7 +20,7 @@ const LoginForm = (props) => {
 
   return (
     <Segment stacked padded style={{ borderRadius: 0, paddingTop: '75px' }}>
-      <Header as="h1" color="blue" textAlign="center" style={{ fontSize: '3rem' }}>
+      <Header as="h1" color="orange" textAlign="center" style={{ fontSize: '3rem' }}>
         {translate('title')}
       </Header>
 
@@ -58,6 +59,13 @@ const LoginForm = (props) => {
       </Form>
     </Segment>
   );
+};
+
+LoginForm.propTypes = {
+  translate: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default LoginForm;

@@ -31,7 +31,7 @@ class Navbar extends Component {
     void translate;
 
     return (
-      <Menu id="navbar" color={color || 'blue'} inverted={inverted} fixed="top" borderless>
+      <Menu id="navbar" color={color || 'orange'} inverted={inverted} fixed="top" borderless>
         <Menu.Item>
           <Breadcrumb className="navbar-title" size="large">
             {sidebar && (
@@ -39,7 +39,7 @@ class Navbar extends Component {
                 <Icon
                   link
                   style={{ marginRight: '17px' }}
-                  color={color || 'blue'}
+                  color={color || 'orange'}
                   inverted={inverted}
                   name={smallMenu ? 'indent' : 'outdent'}
                   onClick={onChangeSizeButtonClick}
@@ -68,7 +68,7 @@ class Navbar extends Component {
                     active={active === name}
                   >
                     {_.isString(icon) ? (
-                      <Icon name={icon} inverted={inverted} color={color || 'blue'} size="large" />
+                      <Icon name={icon} inverted={inverted} color={color || 'orange'} size="large" />
                     ) : icon}
                   </Menu.Item>
                 ))
@@ -88,7 +88,7 @@ class Navbar extends Component {
                   active={active === name}
                 >
                   {_.isString(icon) ? (
-                    <Icon name={icon} inverted={inverted} color={color || 'blue'} size="large" />
+                    <Icon name={icon} inverted={inverted} color={color || 'orange'} size="large" />
                   ) : icon}
                 </Menu.Item>
               ))
@@ -96,11 +96,11 @@ class Navbar extends Component {
           }
           {showProfilePath && (
             <Menu.Item as={Link} to="/profile">
-              <Icon name="user" inverted={inverted} color={color || 'blue'} size="large" />
+              <Icon name="user" inverted={inverted} color={color || 'orange'} size="large" />
             </Menu.Item>
           )}
           <Menu.Item as={Link} to="/logout">
-            <Icon name="log out" inverted={inverted} color={color || 'blue'} size="large" />
+            <Icon name="log out" inverted={inverted} color={color || 'orange'} size="large" />
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -124,12 +124,12 @@ class Navbar extends Component {
     } = this.props;
 
     return (
-      <Menu id="navbar" color={color || 'blue'} inverted={inverted} fixed="top" fluid widths={3} borderless>
+      <Menu id="navbar" color={color || 'orange'} inverted={inverted} fixed="top" fluid widths={3} borderless>
         <Menu.Item>
           {sidebar && (
             <Icon
               link
-              color={color || 'blue'}
+              color={color || 'orange'}
               inverted={inverted}
               name={smallMenu ? 'indent' : 'outdent'}
               style={{ zIndex: 2001 }}
@@ -142,7 +142,7 @@ class Navbar extends Component {
           <span className="white-link"><span style={{ marginLeft: '0.3em' }}>{version}</span></span>
         </Menu.Item>
         <Menu.Item position="right">
-          <Dropdown color={color} icon="bars" direction="left">
+          <Dropdown color={color} icon="bars">
             <Dropdown.Menu style={{ marginTop: '20px', marginRight: '-200%' }}>
               {
                 Array.from(options || []).map(({
@@ -155,7 +155,7 @@ class Navbar extends Component {
                     active={active === name}
                   >
                     {_.isString(icon) ? (
-                      <Icon name={icon} color={color || 'blue'} inverted={inverted} size="large" />
+                      <Icon name={icon} color={color || 'orange'} inverted={inverted} size="large" />
                     ) : icon}
                     { description }
                   </Dropdown.Item>
@@ -165,14 +165,14 @@ class Navbar extends Component {
               {showProfilePath && (
                 <Dropdown.Item as={Link} to="/profile">
                   <span>
-                    <Icon name="user" size="large" color={color || 'blue'} inverted={inverted} />
+                    <Icon name="user" size="large" color={color || 'orange'} inverted={inverted} />
                     { translate('profile') }
                   </span>
                 </Dropdown.Item>
               )}
               <Dropdown.Item as={Link} to="/logout">
                 <span>
-                  <Icon name="log out" color={color || 'blue'} inverted={inverted} />
+                  <Icon name="log out" color={color || 'orange'} inverted={inverted} />
                   { translate('logout') }
                 </span>
               </Dropdown.Item>
@@ -199,7 +199,7 @@ class Navbar extends Component {
 
 Navbar.defaultProps = {
   onChangeSizeButtonClick: null,
-  color: 'blue',
+  color: 'orange',
   sidebar: false,
   smallMenu: true,
   options: [],
@@ -209,6 +209,7 @@ Navbar.defaultProps = {
   logoMobile: '',
   showProfilePath: true,
   version: '',
+  inverted: false,
 };
 
 Navbar.propTypes = {
@@ -222,6 +223,7 @@ Navbar.propTypes = {
   logoMobile: PropTypes.string,
   version: PropTypes.string,
   showProfilePath: PropTypes.bool,
+  inverted: PropTypes.bool,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
