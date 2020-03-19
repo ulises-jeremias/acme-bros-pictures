@@ -1,11 +1,14 @@
 const _ = require('underscore');
 
-import { getRepository, In } from 'typeorm';
+import { getRepository, In, getManager } from 'typeorm';
 import { DefaultContext } from 'koa';
 import { InternalError, Forbidden, BadRequest } from '../constant/errors';
 import { User } from '../entity/User';
 import { Project } from '../entity/Project';
-import { UserProject, Watching } from '../entity/UserProject';
+import { UserProject } from '../entity/UserProject';
+import { Track } from '../entity/Track';
+import { Workflow } from '../entity/Workflow';
+import { Task } from '../entity/Task';
 
 export default class ProjectsController {
 
@@ -36,11 +39,13 @@ export default class ProjectsController {
 
         try {
             const projects = await userProjectRepository.find({ user });
-            const results = _.map(projects, (project: UserProject) => ({
+            const results = _.map(projects, async (project: UserProject) => ({
                 watching: project.watching,
                 project: project.project,
+                employeesCount: await userProjectRepository.count({ project: project.project }), 
             }));
-            ctx.ok({ data: results });
+
+            ctx.ok({ data: await Promise.all(results) });
         } catch (err) {
             throw new InternalError(err);
         }
@@ -78,22 +83,53 @@ export default class ProjectsController {
         const user: User = ctx.state.user;
 
         const userProjectRepository = getRepository(UserProject);
+        const taskRepository = getRepository(Task);
+        const trackRepository = getRepository(Track);
+        const projectRepository = getRepository(Project);
+        const workflowRepository = getRepository(Workflow);
 
-        const userProjects = await userProjectRepository.find({ user });
-        const userProject: UserProject = _.find(
-            userProjects,
-            (userProject: UserProject) => userProject.project.id === id
-        );
+        const userProject = await userProjectRepository
+            .createQueryBuilder('row')
+            .addSelect('row.watching')
+            .leftJoinAndSelect('row.project', 'project')
+            .where('row.user = :user', { user: user.id })
+            .andWhere('row.project = :project', { project: id })
+            .getOne();
 
         if (!userProject) {
             throw new Forbidden('You cannot access to the asked data');
         }
 
-        const { watching, project } = userProject;
-        await project.employees;
-        await project.tracks;
+        const { watching } = userProject;
+        const project = await projectRepository.findOne({
+            where: { id: userProject.project.id },
+            relations: ['projectEmployees', 'tracks'],
+        });
 
-        ctx.ok({ data: { watching, project } });
+        const tracks = await trackRepository.find({
+            where: { project },
+            relations: ['song', 'workflow']
+        });
+        
+        const results = _.map(tracks, async (track: Track) => {
+            const workflow = await workflowRepository.findOne({
+                where: { track },
+                relations: ['tasks'],
+            });
+            return {
+                ...track,
+                workflow: {
+                    ...workflow,
+                    tasks: await taskRepository.find({
+                        where: { workflowId: track.workflowId },
+                    })
+                }
+            };
+        });
+
+        const projectTracks = await Promise.all(results);
+
+        ctx.ok({ data: { watching, project: { ...project, projectTracks } } });
     }
 
     /**
@@ -136,11 +172,10 @@ export default class ProjectsController {
         await ctx.validate({ name, employees }, {
             name: ['required'],
             employees: ['required', 'array', 'minLength:1'],
+            'employees.*.id': ['required'],
         });
 
-        const projectRepository = getRepository(Project);
         const userRepository = getRepository(User);
-        const userProjectRepository = getRepository(UserProject);
 
         const existingEmployees: User[] = await userRepository
             .find({
@@ -148,24 +183,18 @@ export default class ProjectsController {
             });
 
         try {
-            const project = projectRepository.create({ name });
-            project.employees = Promise.resolve(existingEmployees);
-            const createdProject = await projectRepository.save(project);
-
-            const projectEmployees = _.map(
-                existingEmployees,
-                (emp: User) => userProjectRepository.create({ user: emp, project })
-            );
-
-            const createdProjectEmployees = await userProjectRepository.save(projectEmployees);
-
-            createdProject.projectEmployees = Promise.resolve(createdProjectEmployees);
-            await projectRepository.save(createdProject);
-
-            await createdProject.employees;
-            await createdProject.projectEmployees;
-
-            ctx.created({ data: createdProject });
+            await getManager().transaction(async transactionalEntityManager => {
+                const project = transactionalEntityManager.create(Project, { name });
+                const createdProject = await transactionalEntityManager.save(project);
+                const projectEmployees = _.map(existingEmployees, (emp: User) => (
+                    transactionalEntityManager.create(UserProject, { user: emp, project })
+                ));
+                const createdProjectEmployees = await transactionalEntityManager.save(projectEmployees);
+                createdProject.projectEmployees = Promise.resolve(createdProjectEmployees);
+                await transactionalEntityManager.save(createdProject);
+                await createdProject.projectEmployees;
+                ctx.created({ data: createdProject });
+            });
         } catch (err) {
             if (err.name === 'QueryFailedError') {
                 throw new BadRequest('There was a problem creating the project');
@@ -208,16 +237,29 @@ export default class ProjectsController {
         const { id } = ctx.params;
         const user: User = ctx.state.user;
 
-        const authProjects = await user.projects;
-        const project = _.find(authProjects, (authProject: Project) => authProject.id === id);
+        const userProjectRepository = getRepository(UserProject);
+        const projectRepository = getRepository(Project);
 
-        if (!project) {
+        const userProject = await userProjectRepository
+            .createQueryBuilder('row')
+            .addSelect('row.watching')
+            .leftJoinAndSelect('row.project', 'project')
+            .where('row.user = :user', { user: user.id })
+            .andWhere('row.project = :project', { project: id })
+            .getOne();
+
+        if (!userProject) {
             throw new Forbidden('You cannot access to the asked data');
         }
 
+        const project = await projectRepository.findOne({
+            where: { id: userProject.project.id },
+            relations: ['tracks'],
+        });
+
         try {
             const tracks = await project.tracks;
-            ctx.ok({ data: tracks });
+            ctx.ok({ data: tracks || [] });
         } catch (err) {
             throw new InternalError(err);
         }

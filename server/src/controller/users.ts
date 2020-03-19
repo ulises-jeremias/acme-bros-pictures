@@ -2,18 +2,18 @@ const _ = require('underscore');
 
 import { DefaultContext } from 'koa';
 import { InternalError } from '../constant/errors';
-import { Song } from '../entity/Song';
+import { User } from '../entity/User';
 import { getRepository } from 'typeorm';
 
-export default class SongsController {
+export default class UsersController {
 
     /**
      * @swagger
-     * /songs:
+     * /users:
      *  get:
      *      tags:
-     *          - Songs
-     *      summary: Access available songs.
+     *          - Users
+     *      summary: Access available users.
      *      security:
      *          - auth: []
      *      responses:
@@ -22,7 +22,7 @@ export default class SongsController {
      *              schema:
      *                  type: array
      *                  items:
-     *                      $ref: "#/components/schemas/Song"
+     *                      $ref: "#/components/schemas/User"
      *          401:
      *              $ref: "#/components/responses/Unauthorized"
      *          500:
@@ -30,9 +30,9 @@ export default class SongsController {
      */
     public static async list(ctx: DefaultContext) {
         try {
-            const songRepository = getRepository(Song);
-            const songs = await songRepository.find();
-            ctx.ok({ data: songs });
+            const songRepository = getRepository(User);
+            const users = await songRepository.find();
+            ctx.ok({ data: users });
         } catch (err) {
             throw new InternalError(err);
         }
