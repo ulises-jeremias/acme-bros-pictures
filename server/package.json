@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "readmeFilename": "README.md",
   "scripts": {
-    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint": "./node_modules/.bin/tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "yarn lint --fix",
     "build": "yarn lint && yarn clean && tsc",
     "clean": "yarn clean:build",
@@ -16,7 +16,7 @@
     "start": "node dist/index.js",
     "test": "NODE_ENV=test NODE_TEST=true jest",
     "coverage": "NODE_ENV=test NODE_TEST=true jest --coverage || true",
-    "heroku-postbuild": "yarn && yarn build && cp -rf ./dist/src/* ."
+    "heroku-postbuild": "yarn --only-dev && yarn && yarn build && cp -rf ./dist/src/* ."
   },
   "engines": {
     "node": "12.13.0"
