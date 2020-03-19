@@ -1,0 +1,18 @@
+{
+  "title": "Sign Up",
+  "sendButton": "Sign Up",
+  "username": {
+    "label": "Username",
+    "placeholder": "Username"
+  },
+  "email": {
+    "label": "Email",
+    "placeholder": "Email"
+  },
+  "password": {
+    "label": "Password",
+    "placeholder": "Password"
+  },
+  "ask": "Have you got an account?",
+  "login": "Login!"
+}

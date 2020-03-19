@@ -1,3 +1,7 @@
+export const AUTH_REGISTER_REQUEST = 'auth-register-request';
+export const AUTH_REGISTER_SUCCESS = 'auth-register-success';
+export const AUTH_REGISTER_FAILURE = 'auth-register-failure';
+
 export const AUTH_LOGIN_REQUEST = 'auth-login-request';
 export const AUTH_LOGIN_SUCCESS = 'auth-login-success';
 export const AUTH_LOGIN_FAILURE = 'auth-login-failure';

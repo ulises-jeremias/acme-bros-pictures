@@ -27,7 +27,7 @@ i18n
     fallbackLng: 'en',
 
     // have a common namespace used around the full app
-    ns: ['error', 'common', 'login', 'navbar', 'sidebar', 'projects', 'tracks', 'workflows'],
+    ns: ['error', 'common', 'login', 'register', 'navbar', 'sidebar', 'projects', 'tracks', 'workflows'],
     defaultNS: 'common',
 
     debug: process.env.NODE_ENV === 'development',

@@ -10,6 +10,10 @@ import {
   WORKFLOWS_WORKFLOW_CREATE_REQUEST,
   WORKFLOWS_WORKFLOW_CREATE_SUCCESS,
   WORKFLOWS_WORKFLOW_CREATE_FAILURE,
+
+  WORKFLOWS_TASK_CREATE_REQUEST,
+  WORKFLOWS_TASK_CREATE_SUCCESS,
+  WORKFLOWS_TASK_CREATE_FAILURE,
 } from 'app/constants';
 
 export const fetchWorkflow = (id) => async (dispatch, getState) => {
@@ -42,7 +46,24 @@ export const createWorkflow = (workflow) => async (dispatch, getState) => {
   }
 };
 
+export const createTask = (task) => async (dispatch, getState) => {
+  const { auth: { token } } = getState();
+  try {
+    dispatch({ type: WORKFLOWS_TASK_CREATE_REQUEST });
+    await workflowsBackend.createTask(task, token);
+    dispatch({ type: WORKFLOWS_TASK_CREATE_SUCCESS });
+    await dispatch(fetchWorkflow(task.workflowId));
+  } catch (err) {
+    const [message, redirect] = handleError(err);
+    if (redirect) {
+      dispatch(push(redirect));
+    }
+    dispatch({ type: WORKFLOWS_TASK_CREATE_FAILURE, payload: message });
+  }
+};
+
 export default {
   fetchWorkflow,
   createWorkflow,
+  createTask,
 };

@@ -22,7 +22,7 @@ import {
 } from 'app/config/enums';
 
 const Project = (props) => {
-  const { translate, project: { watching, data: project } } = props;
+  const { translate, onRefresh, project: { watching, data: project } } = props;
   const { push } = useHistory();
 
   return (
@@ -32,6 +32,15 @@ const Project = (props) => {
           <Table.HeaderCell colSpan="8">
             {project.name}
             <Watching circular inverted watching={watching} floated="right" size="mini" />
+            <Button
+              onClick={onRefresh}
+              circular
+              color="blue"
+              icon="refresh"
+              inverted
+              size="mini"
+              floated="right"
+            />
             <Button
               onClick={() => push(`/projects/${project.id}/tracks/create`)}
               circular
@@ -126,6 +135,7 @@ const Project = (props) => {
 
 Project.propTypes = {
   translate: PropTypes.func.isRequired,
+  onRefresh: PropTypes.func.isRequired,
   project: PropTypes.shape({
     watching: PropTypes.oneOf([NOT_WATCHING, RELEASES_ONLY, WATCHING, IGNORING]),
     data: PropTypes.shape({}).isRequired,

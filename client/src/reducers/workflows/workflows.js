@@ -9,6 +9,10 @@ import {
   WORKFLOWS_WORKFLOW_CREATE_REQUEST,
   WORKFLOWS_WORKFLOW_CREATE_SUCCESS,
   WORKFLOWS_WORKFLOW_CREATE_FAILURE,
+
+  WORKFLOWS_TASK_CREATE_REQUEST,
+  WORKFLOWS_TASK_CREATE_SUCCESS,
+  WORKFLOWS_TASK_CREATE_FAILURE,
 } from 'app/constants';
 
 const request = (state) => ({
@@ -40,6 +44,21 @@ const mutations = {
   [WORKFLOWS_WORKFLOW_CREATE_REQUEST]: request,
   [WORKFLOWS_WORKFLOW_CREATE_FAILURE]: error,
   [WORKFLOWS_WORKFLOW_CREATE_SUCCESS](state) {
+    return {
+      ...state,
+      error: '',
+      success: true,
+      isFetching: false,
+    };
+  },
+
+  /**
+   * NOTE: this shouldn't be here. In a future version
+   * tasks reducer will be created.
+   */
+  [WORKFLOWS_TASK_CREATE_REQUEST]: request,
+  [WORKFLOWS_TASK_CREATE_FAILURE]: error,
+  [WORKFLOWS_TASK_CREATE_SUCCESS](state) {
     return {
       ...state,
       error: '',

@@ -4,19 +4,18 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import {
   Grid,
   Message,
-  Divider,
 } from 'semantic-ui-react';
 
-import { login } from 'app/actions/auth';
-import LoginForm from 'app/containers/Login/LoginFormContainer';
+import { register } from 'app/actions/auth';
+import RegisterForm from 'app/containers/Register/RegisterFormContainer';
 import { Link } from 'react-router-dom';
 
-const LoginContainer = (props) => {
+const RegisterContainer = (props) => {
   const { translate } = props;
   const error = useSelector((state) => state.auth.error, shallowEqual);
   const dispatch = useDispatch();
 
-  const onSubmit = (values) => dispatch(login(values));
+  const onSubmit = (values) => dispatch(register(values));
 
   return (
     <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
@@ -26,23 +25,21 @@ const LoginContainer = (props) => {
             <Message.Header>{error}</Message.Header>
           </Message>
         )}
-        <LoginForm
-          translate={(name, ...args) => translate(`login:${name}`, ...args)}
+        <RegisterForm
+          translate={(name, ...args) => translate(`register:${name}`, ...args)}
           onSubmit={onSubmit}
         />
         <Message style={{ borderRadius: 0, textAlign: 'left' }}>
-          {translate('login:contact')}
-          <Divider hidden fitted />
-          {translate('login:ask')}
-          <Link style={{ marginLeft: '5px' }} to="/register">{translate('login:register')}</Link>
+          {translate('register:ask')}
+          <Link style={{ marginLeft: '5px' }} to="/login">{translate('register:login')}</Link>
         </Message>
       </Grid.Column>
     </Grid>
   );
 };
 
-LoginContainer.propTypes = {
+RegisterContainer.propTypes = {
   translate: PropTypes.func.isRequired,
 };
 
-export default LoginContainer;
+export default RegisterContainer;

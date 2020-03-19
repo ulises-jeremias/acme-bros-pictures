@@ -10,6 +10,10 @@ import {
   AUTH_LOGOUT_REQUEST,
   AUTH_LOGOUT_SUCCESS,
   AUTH_LOGOUT_FAILURE,
+
+  AUTH_REGISTER_REQUEST,
+  AUTH_REGISTER_SUCCESS,
+  AUTH_REGISTER_FAILURE,
 } from 'app/constants';
 
 export const login = (values) => async (dispatch) => {
@@ -33,6 +37,21 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: AUTH_LOGOUT_SUCCESS });
   } catch (err) {
     dispatch({ type: AUTH_LOGOUT_FAILURE });
+  }
+};
+
+export const register = (values) => async (dispatch) => {
+  try {
+    dispatch({ type: AUTH_REGISTER_REQUEST });
+    await authBackend.register(values);
+    dispatch({ type: AUTH_REGISTER_SUCCESS });
+    dispatch(push('/login'));
+  } catch (err) {
+    const [message, redirect] = handleError(err, { onUnauthorizedRedirect: false });
+    if (redirect) {
+      dispatch(push(redirect));
+    }
+    dispatch({ type: AUTH_REGISTER_FAILURE, payload: message });
   }
 };
 

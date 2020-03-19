@@ -9,5 +9,7 @@
     "label": "Password",
     "placeholder": "Password"
   },
-  "contact": "Any inconvenience or doubt can contact the administration."
+  "contact": "Any inconvenience or doubt can contact the administration.",
+  "ask": "New in ACME BROS Pictures?",
+  "register": "Sign Up!"
 }

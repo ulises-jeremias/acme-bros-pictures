@@ -10,5 +10,24 @@
       "placeholder": "Enter the expected start date"
     },
     "sendButton": "Submit"
+  },
+  "task": {
+    "create": {
+      "title": "Create workflow",
+      "description": {
+        "label": "Description",
+        "placeholder": "Enter the task's description"
+      },
+      "status": {
+        "options": {
+          "todo": "Todo",
+          "running": "Running",
+          "success": "Success",
+          "failed": "Failed"
+        },
+        "label": "Initial status",
+        "placeholder": "Enter the initial status"
+      }
+    }
   }
 }

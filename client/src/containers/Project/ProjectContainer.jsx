@@ -44,6 +44,7 @@ const ProjectContainer = (props) => {
       <Segment padded loading={isFetching}>
         <Project
           project={project}
+          onRefresh={() => dispatch(fetchProject(id))}
           translate={(name, ...args) => translate(`projects:${name}`, ...args)}
         />
       </Segment>

@@ -92,7 +92,7 @@ const Sidebar = (props) => {
         searchValue={searchValue}
         translate={translate}
       />
-      <div className={`container-content ${smallMenu ? 'small-menu-content' : ''}`}>
+      <div className={`container-content ${smallMenu ? 'small-menu-content' : 'menu-content'}`}>
         {children}
       </div>
     </div>
