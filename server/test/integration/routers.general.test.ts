@@ -3,7 +3,7 @@ import app from '../../src/server';
 
 describe('basic route tests', () => {
     test('get index route GET /', async () => {
-        const response = await request(app.callback()).get('/');
+        const response = await request(app.callback()).get('/api/v1');
         expect(response.status).toBe(200);
         expect(response.text).toBe('Welcome to ACME BROS Pictures API');
     });
