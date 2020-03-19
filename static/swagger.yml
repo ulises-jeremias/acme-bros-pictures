@@ -1,0 +1,742 @@
+---
+openapi: 3.0.0
+info:
+  title: acme-bros-pictures-api
+  description: REST API using NodeJS and Koa2, Typescript. TypeORM with class-validator,
+    SQL CRUD. Docker.
+  version: 1.0.0
+  termsOfService: ''
+basePath: "/api/v1"
+servers: []
+paths:
+  "/auth/login":
+    post:
+      tags:
+      - Auth
+      summary: Logs user into the system.
+      parameters:
+      - name: username
+        in: body
+        description: The user name for login
+        required: true
+        type: string
+      - name: password
+        in: body
+        description: The password for login in clear text
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: string
+        '400':
+          description: Invalid username/password supplied
+  "/auth/me":
+    get:
+      tags:
+      - Auth
+      summary: Access profile info.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/User"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+  "/":
+    get:
+      tags:
+      - Home
+      summary: The welcome string is returned.
+      responses:
+        '200':
+          description: welcome message
+          content:
+            application/plain:
+              schema:
+                type: string
+              example: Welcome to ACME BROS Pictures API
+  "/projects":
+    get:
+      tags:
+      - Projects
+      summary: Access projects for the connected user.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Project"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    post:
+      tags:
+      - Projects
+      summary: Create the project.
+      security:
+      - auth: []
+      parameters:
+      - name: name
+        in: body
+        description: The project name
+        type: string
+        required: true
+      - name: employees
+        in: body
+        description: The employees
+        required: true
+        type: array
+        items:
+          "$ref": "#/components/schemas/User"
+      responses:
+        '201':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Project"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/projects/{id}":
+    get:
+      tags:
+      - Projects
+      summary: Access project data.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The project identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Project"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/projects/{id}/tracks":
+    get:
+      tags:
+      - Projects
+      summary: Access tracks for the given project.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The project identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Track"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/songs":
+    get:
+      tags:
+      - Songs
+      summary: Access available songs.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Song"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/tasks":
+    get:
+      tags:
+      - Tasks
+      summary: Access tasks for the connected user.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Task"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    post:
+      tags:
+      - Tasks
+      summary: Create the task for the given track.
+      security:
+      - auth: []
+      parameters:
+      - name: workflowId
+        in: body
+        required: true
+        description: The workflow identifier
+        type: string
+      - name: description
+        in: body
+        description: The task description
+        type: string
+        required: true
+      - name: status
+        in: body
+        description: The task status
+        required: true
+        type: string
+        enum:
+        - todo
+        - running
+        - success
+        - failed
+      responses:
+        '201':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Task"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/tasks/{id}":
+    get:
+      tags:
+      - Tasks
+      summary: Access task data.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The task identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Task"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    put:
+      tags:
+      - Tasks
+      summary: Update the task.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The task identifier
+        type: string
+      - name: description
+        in: body
+        description: The task description
+        type: string
+      - name: status
+        in: body
+        description: The task status
+        type: string
+        enum:
+        - todo
+        - running
+        - success
+        - failed
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Task"
+        '400':
+          "$ref": "#/components/responses/BadRequest"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/tracks":
+    get:
+      tags:
+      - Tracks
+      summary: Access tracks for the connected user.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Track"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    post:
+      tags:
+      - Tracks
+      summary: Create the track for the given data.
+      security:
+      - auth: []
+      parameters:
+      - name: projectId
+        in: body
+        required: true
+        description: The track identifier
+        type: string
+      - name: startTime
+        in: body
+        type: string
+        required: true
+      - name: endTime
+        in: body
+        type: string
+        required: true
+      - name: songStartTime
+        in: body
+        type: string
+        required: true
+      - name: songEndTime
+        in: body
+        type: string
+        required: true
+      - name: song
+        in: body
+        description: The song
+        type: object
+        schema:
+          "$ref": "#/components/schemas/Song"
+      responses:
+        '201':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Track"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/tracks/{id}":
+    get:
+      tags:
+      - Tracks
+      summary: Access track data.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The track identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Track"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/tracks/{id}/workflow":
+    get:
+      tags:
+      - Tracks
+      summary: Access workflow for the given track.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The track identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Workflow"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/users":
+    get:
+      tags:
+      - Users
+      summary: Access available users.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/User"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/workflows":
+    get:
+      tags:
+      - Workflows
+      summary: Access workflows for the connected user.
+      security:
+      - auth: []
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              "$ref": "#/components/schemas/Workflow"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    post:
+      tags:
+      - Workflows
+      summary: Create the workflow for the given track.
+      security:
+      - auth: []
+      parameters:
+      - name: track
+        in: body
+        required: true
+        description: The track identifier
+        type: string
+      - name: description
+        in: body
+        description: The worflow description
+        type: string
+        required: true
+      - name: expectedStartDate
+        in: body
+        description: The worflow expected start date
+        type: string
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Workflow"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+  "/workflows/{id}":
+    get:
+      tags:
+      - Workflows
+      summary: Access workflow data.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The worflow identifier
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Workflow"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+    put:
+      tags:
+      - Workflows
+      summary: Update the workflow.
+      security:
+      - auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The worflow identifier
+        type: string
+      - name: description
+        in: body
+        description: The worflow description
+        type: string
+      - name: expectedStartDate
+        in: body
+        description: The worflow expected start date
+        type: string
+      responses:
+        '200':
+          description: Successful operation
+          schema:
+            "$ref": "#/components/schemas/Workflow"
+        '400':
+          "$ref": "#/components/responses/BadRequest"
+        '401':
+          "$ref": "#/components/responses/Unauthorized"
+        '403':
+          "$ref": "#/components/responses/Forbidden"
+        '500':
+          "$ref": "#/components/responses/InternalError"
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - status
+      - code
+      - message
+      properties:
+        status:
+          type: string
+          example: 500
+        code:
+          type: string
+          example: INTERNAL_ERROR
+        message:
+          type: string
+          example: The server encountered an internal error.
+    Project:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          example: The Room
+        tracks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Track"
+        employees:
+          type: array
+          items:
+            "$ref": "#/components/schemas/User"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Song:
+      type: object
+      required:
+      - title
+      - author
+      properties:
+        title:
+          type: string
+          example: I will survive
+        author:
+          type: string
+          example: "‎Freddie Perren, Dino Fekaris"
+    Task:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - todo
+          - running
+          - success
+          - failed
+          example: todo
+        task:
+          "$ref": "#/components/schemas/Task"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Track:
+      type: object
+      required:
+      - startTime
+      - endTime
+      - songStartTime
+      - songEndTime
+      - project
+      - song
+      properties:
+        startTime:
+          type: string
+          example: 
+        endTime:
+          type: string
+          example: 
+        songStartTime:
+          type: string
+          example: 
+        songEndTime:
+          type: string
+          example: 
+        project:
+          "$ref": "#/components/schemas/Project"
+        song:
+          "$ref": "#/components/schemas/Song"
+        workflow:
+          "$ref": "#/components/schemas/Workflow"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    User:
+      type: object
+      required:
+      - email
+      - username
+      - password
+      properties:
+        email:
+          type: string
+          example: ucornejo@acme.org
+        username:
+          type: string
+          example: ucornejo
+        password:
+          type: string
+          example: 
+        name:
+          type: string
+          example: Ulises Jeremias Cornejo Fandos
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    Workflow:
+      type: object
+      required:
+      - description
+      - expectedStartDate
+      - track
+      properties:
+        description:
+          type: string
+          example: Workflow with independent group
+        expectedStartDate:
+          type: string
+        tasks:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Task"
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+  headers:
+    X-Request-Id:
+      schema:
+        type: string
+        format: uuid
+      description: Unique identifier for every HTTP request involved in operation
+        processing.
+  parameters: {}
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+    NoContent:
+      description: No content
+    InternalError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+    ValidateFail:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+    Unauthorized:
+      description: Access token is missing or invalid
+      headers:
+        Authorization:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+    BadRequest:
+      description: Required parameters are missing
+      content:
+        application/json:
+          schema:
+            "$ref": "#/components/schemas/Error"
+tags:
+- name: Auth
+  description: Auth endpoints
+- name: Projects
+  description: Projects management for a connected user
+- name: Songs
+  description: Songs endpoints
+- name: Tracks
+  description: Tracks endpoints for the different projects
+- name: Users
+  description: Users endpoints
+- name: Workflows
+  description: Workflows endpoints

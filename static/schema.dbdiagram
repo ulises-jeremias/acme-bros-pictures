@@ -1,0 +1,78 @@
+Table "project" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "name" "character varying" [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+}
+
+Table "song" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "title" "character varying" [not null]
+  "author" "character varying" [not null]
+}
+
+Table "task" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "description" "character varying" [not null]
+  "status" task_status_enum [not null, default: "todo"]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+  "workflowId" uuid
+}
+
+Table "track" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "startTime" "character varying" [not null]
+  "endTime" "character varying" [not null]
+  "songStartTime" "character varying" [not null]
+  "songEndTime" "character varying" [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+  "projectId" uuid
+  "songId" uuid
+  "workflowId" uuid [unique]
+}
+
+Table "user" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "email" "character varying" [unique, not null]
+  "username" "character varying" [unique, not null]
+  "password" "character varying" [not null]
+  "name" "character varying" [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+}
+
+Table "user_project" {
+  "id" integer [not null, default: `nextval('user_project_id_seq')`]
+  "watching" user_project_watching_enum [not null, default: "watching"]
+  "user_id" uuid [not null]
+  "project_id" uuid [not null]
+
+Indexes {
+  (id, user_id, project_id) [pk]
+}
+}
+
+Table "workflow" {
+  "id" uuid [pk, not null, default: `uuid_generate_v4()`]
+  "description" "character varying" [not null]
+  "expectedStartDate" date [not null]
+  "createdAt" timestamp [not null, default: `now()`]
+  "updatedAt" timestamp [not null, default: `now()`]
+  "trackId" uuid [unique]
+}
+
+Ref:"workflow"."id" < "task"."workflowId"
+
+Ref:"project"."id" < "track"."projectId"
+
+Ref:"song"."id" < "track"."songId"
+
+Ref:"workflow"."id" < "track"."workflowId"
+
+Ref:"user"."id" < "user_project"."user_id"
+
+Ref:"project"."id" < "user_project"."project_id"
+
+Ref:"track"."id" < "workflow"."trackId"

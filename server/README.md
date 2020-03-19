@@ -4,8 +4,8 @@ AVAILABLE ENDPOINTS
 
 | method             | resource         | description                                                                                    |
 |:-------------------|:-----------------|:-----------------------------------------------------------------------------------------------|
-| `GET`              | `/`              | Simple welcome response                                                                        |
-| `GET`              | `/swagger`       | Swagger documentation                                                                                               |    
+| `GET`              | `/swagger`       | Swagger documentation                                                                                               |  
+| `GET`              | `/swagger.json`       | Swagger documentation in json format                                                                                              |   
 
 ## Pre-reqs
 
@@ -100,7 +100,7 @@ Notice that if `NODE_ENV` is set to development, the ORM config won't be using S
 createConnection({
     ...
     extra: {
-        ssl: config.DbSslConn, // if not development, will use SSL
+        ssl: config.dbSslConn, // if not development, will use SSL
     }
 })
 ```
