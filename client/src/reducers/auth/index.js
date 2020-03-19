@@ -5,7 +5,7 @@ import authReducer from './auth';
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['user', 'token'],
+  whitelist: ['user', 'token', 'isAuth'],
 };
 
 export default persistReducer(authPersistConfig, authReducer);

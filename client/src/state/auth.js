@@ -1,7 +1,7 @@
 export default {
-  error: null,
   isFetching: false,
   isAuth: false,
+  error: '',
   token: null,
   user: {
     name: '',

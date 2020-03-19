@@ -1,14 +1,10 @@
-import initialState from 'app/state/auth';
+import initialState from 'app/state/songs';
 import {
-  AUTH_DISMISS_ERROR,
-
-  AUTH_LOGIN_REQUEST,
-  AUTH_LOGIN_SUCCESS,
-  AUTH_LOGIN_FAILURE,
-
-  AUTH_LOGOUT_REQUEST,
   AUTH_LOGOUT_SUCCESS,
-  AUTH_LOGOUT_FAILURE,
+
+  SONGS_GET_REQUEST,
+  SONGS_GET_SUCCESS,
+  SONGS_GET_FAILURE,
 } from 'app/constants';
 
 const request = (state) => ({
@@ -21,26 +17,21 @@ const error = (state, err) => ({
   ...state,
   error: err,
   isFetching: false,
-  isAuth: false,
 });
 
 const mutations = {
-  [AUTH_DISMISS_ERROR]: request,
-  [AUTH_LOGIN_REQUEST]: request,
-  [AUTH_LOGIN_FAILURE]: error,
-
-  [AUTH_LOGIN_SUCCESS](state, data) {
+  [SONGS_GET_REQUEST]: request,
+  [SONGS_GET_FAILURE]: error,
+  [SONGS_GET_SUCCESS](state, songs) {
     return {
       ...state,
       error: '',
+      success: true,
       isFetching: false,
-      isAuth: true,
-      token: data.token,
+      songs,
     };
   },
 
-  [AUTH_LOGOUT_REQUEST]: request,
-  [AUTH_LOGOUT_FAILURE]: error,
   [AUTH_LOGOUT_SUCCESS]() {
     return initialState;
   },
