@@ -20,6 +20,7 @@ const LeftMenu = (props) => {
     results,
     searchValue,
     isFetching,
+    projects,
   } = props;
 
   return (
@@ -53,12 +54,25 @@ const LeftMenu = (props) => {
           )
         }
       </Menu.Item>
-      <Menu.Item as={Link} to="/">
-        {translate('projects')}
-      </Menu.Item>
       <Menu.Item as={Link} to="/projects/create">
+        <Icon name="add square" size="tiny" style={{ marginRight: '5px' }} />
         {translate('createProject')}
       </Menu.Item>
+      <Menu.Item as={Link} to="/">
+        <Icon name="numbered list" size="tiny" style={{ marginRight: '5px' }} />
+        {translate('projects')}
+      </Menu.Item>
+      {projects.map(({ project }) => (
+        <Menu.Item
+          style={{ marginLeft: '25px' }}
+          key={project.id}
+          as={Link}
+          to={`/projects/${project.id}`}
+        >
+          <Icon name="film" size="tiny" style={{ marginRight: '5px' }} />
+          {project.name}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 };
@@ -76,6 +90,7 @@ const Sidebar = (props) => {
     isFetching,
     translate,
     searchbox,
+    projects,
   } = props;
 
   return (
@@ -91,6 +106,7 @@ const Sidebar = (props) => {
         isFetching={isFetching}
         searchValue={searchValue}
         translate={translate}
+        projects={projects}
       />
       <div className={`container-content ${smallMenu ? 'small-menu-content' : 'menu-content'}`}>
         {children}
@@ -106,6 +122,7 @@ LeftMenu.propTypes = {
   onResultSelect: PropTypes.func.isRequired,
   resultRenderer: PropTypes.func.isRequired,
   smallMenu: PropTypes.bool.isRequired,
+  projects: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   results: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -138,6 +155,7 @@ Sidebar.propTypes = {
   onSearchFocus: PropTypes.func,
   onResultSelect: PropTypes.func,
   resultRenderer: PropTypes.func,
+  projects: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   results: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

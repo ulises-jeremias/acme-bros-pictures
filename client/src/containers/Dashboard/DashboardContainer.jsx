@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, shallowEqual } from 'react-redux';
 import {
   Responsive,
 } from 'semantic-ui-react';
 
 import Navbar from 'app/components/Layout/Navbar';
 import Sidebar from 'app/components/Layout/Sidebar';
-import DashboardRoutes from '../../routes/dashboard';
+import DashboardRoutes from 'app/routes/dashboard';
 
 const DashboardContainer = (props) => {
   const { translate, user, match } = props;
+  const { projects } = useSelector((state) => state.projects, shallowEqual);
 
   const [smallMenu, setSmallMenu] = useState(false);
   const [previousWidth, setPreviousWidth] = useState(null);
@@ -38,6 +40,7 @@ const DashboardContainer = (props) => {
       <Sidebar
         smallMenu={smallMenu}
         translate={(name, ...args) => translate(`sidebar:${name}`, ...args)}
+        projects={projects}
       >
         <DashboardRoutes match={match} translate={translate} />
       </Sidebar>

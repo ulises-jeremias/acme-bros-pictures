@@ -12,6 +12,7 @@ import {
   Image,
   Segment,
   Divider,
+  Header,
 } from 'semantic-ui-react';
 import {
   TODO,
@@ -60,7 +61,20 @@ const WorkflowContainer = (props) => {
   const running = _.filter(tasks, (task) => task.status === RUNNING);
   const done = _.filter(tasks, (task) => [SUCCESS, FAILED].includes(task.status));
 
-  const colums = [todo, running, done];
+  const colums = [
+    {
+      column: 'To Do',
+      columnTasks: todo,
+    },
+    {
+      column: 'Running',
+      columnTasks: running,
+    },
+    {
+      column: 'Done',
+      columnTasks: done,
+    },
+  ];
 
   return (
     <>
@@ -75,29 +89,28 @@ const WorkflowContainer = (props) => {
         <Divider hidden />
 
         <Grid columns={3}>
-          {colums.map(((columnTasks, i) => (
+          {colums.map((({ column, columnTasks }, i) => (
             <Grid.Column key={`column-${i + 1}`}>
-              <Segment placeholder style={{ minHeight: '100%' }}>
-                <Card.Group itemsPerRow={1}>
-                  {columnTasks.map((task, j) => (
-                    <Card key={`task-${j + 1}`}>
-                      <Card.Content>
-                        <Image floated="right">
-                          <Icon
-                            loading={task.status === RUNNING}
-                            name={STATUS_ICONS[task.status]}
-                            color={STATUS_COLORS[task.status]}
-                          />
-                        </Image>
-                        <Card.Header>{task.description}</Card.Header>
-                        <Card.Meta>
-                          <span>{moment(task.createdAt).fromNow()}</span>
-                        </Card.Meta>
-                      </Card.Content>
-                    </Card>
-                  ))}
-                </Card.Group>
-              </Segment>
+              <Header as="h2" textAlign="center" content={column} />
+              <Card.Group itemsPerRow={1}>
+                {columnTasks.map((task, j) => (
+                  <Card key={`task-${j + 1}`}>
+                    <Card.Content>
+                      <Image floated="right">
+                        <Icon
+                          loading={task.status === RUNNING}
+                          name={STATUS_ICONS[task.status]}
+                          color={STATUS_COLORS[task.status]}
+                        />
+                      </Image>
+                      <Card.Header>{task.description}</Card.Header>
+                      <Card.Meta>
+                        <span>{moment(task.createdAt).fromNow()}</span>
+                      </Card.Meta>
+                    </Card.Content>
+                  </Card>
+                ))}
+              </Card.Group>
             </Grid.Column>
           )))}
         </Grid>

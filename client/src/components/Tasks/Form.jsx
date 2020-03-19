@@ -38,7 +38,7 @@ const TaskForm = (props) => {
         <Field
           component={renderInput}
           required
-          width={7}
+          width={8}
           name="description"
           label={translate('create.description.label')}
           placeholder={translate('create.description.placeholder')}
@@ -47,7 +47,7 @@ const TaskForm = (props) => {
         <Field
           component={renderSelect}
           required
-          width={7}
+          width={8}
           name="status"
           label={translate('create.status.label')}
           placeholder={translate('create.status.placeholder')}
@@ -56,7 +56,6 @@ const TaskForm = (props) => {
         />
         <Form.Button
           style={{ marginTop: '26px' }}
-          width={2}
           loading={submitting}
           color="orange"
           icon="plus"
