@@ -6,7 +6,7 @@
   "author": "ulises-jeremias <ulisescf.24@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "heroku-postbuild": "yarn && yarn --cwd \"server/\" && yarn --cwd \"server/\" build && cp ./server/dist/src/* ."
+    "heroku-postbuild": "yarn && yarn --cwd \"server/\" && yarn --cwd \"server/\" build && cp -rf ./server/dist/src/* . && cp -rf ./server/node_modules ."
   },
   "engines": {
     "node": "12.13.0"
