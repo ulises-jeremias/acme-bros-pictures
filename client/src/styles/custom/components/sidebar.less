@@ -1,13 +1,14 @@
 #sidebar {
   .left-menu {
-    background-color: @blue !important;
+    background-color: #424242 !important;
     color: #fff;
     margin-top: @navbarHeight !important;
 
     transition: width 0.3s;
 
     h4 {
-      color: #b0b0b0;
+      color: @orange;
+      opacity: 0.65;
     }
 
     .item {
@@ -16,12 +17,13 @@
       transition: opacity 1s linear;
       color: #fff;
       background-color: transparent;
+      background: transparent !important;
       padding-left: 30px;
     }
 
     .item:hover {
-      background-color: #ddd;
-      color: grey;
+      background-color: transparent;
+      color: @orange;
     }
 
     .section.item {
@@ -49,7 +51,7 @@
   }
 
   .container-content {
-    background-color: #d1cfcf !important;
+    background-color: #f5f7fa !important;
     position: absolute;
     right: 0;
     margin-top: @navbarHeight !important;
