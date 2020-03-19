@@ -7,5 +7,8 @@
   "license": "MIT",
   "scripts": {
     "heroku-postbuild": "yarn && yarn --cwd \"server/\" && yarn --cwd \"server/\" build && cp ./server/dist/src/* ."
+  },
+  "engines": {
+    "node": "12.13.0"
   }
 }
