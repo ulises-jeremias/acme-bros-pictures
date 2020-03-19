@@ -20,7 +20,7 @@ export const connectionOpts: ConnectionOptions = {
         migrationsDir: `${parentDir}/migration`,
         subscribersDir: `${parentDir}/subscriber`
     },
-    synchronize: false, // !config.isProduction,
+    synchronize: true, // !config.isProduction,
     logging: !config.isProduction,
     extra: {
         ssl: config.db.dbSslConn, // if not development, will use SSL

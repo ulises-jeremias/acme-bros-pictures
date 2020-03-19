@@ -11,7 +11,7 @@ import { UserProject } from '../entity/UserProject';
 import { Song } from '../entity/Song';
 
 function mixedTimeToTime(value: string): string|any {
-    const [hours, minutes, seconds] = value.split(":");
+    const [hours, minutes, seconds] = value.split(':');
     const date = new Date();
     if (hours)
         date.setHours(parseInt(hours));
@@ -59,7 +59,7 @@ export default class TracksController {
                 .getMany();
 
             const projects = _.map(userProjects, (userProject: UserProject) => userProject.project);
-            
+
             const results = _.map(projects, async (project: Project) => {
                 return await trackRepository.find({ where: { projectId: project } });
             });
@@ -185,7 +185,7 @@ export default class TracksController {
         });
 
         const userProjectRepository = getRepository(UserProject);
-        
+
         const userProject = await userProjectRepository
             .createQueryBuilder('row')
             .addSelect('row.watching')
@@ -193,7 +193,7 @@ export default class TracksController {
             .where('row.user = :user', { user: user.id })
             .andWhere('row.project = :project', { project: projectId })
             .getOne();
-        
+
         if (!userProject) {
             throw new Forbidden('You cannot access to the asked data');
         }
@@ -202,7 +202,7 @@ export default class TracksController {
         const trackRepository = getRepository(Track);
 
         let song: Song = null;
-        
+
         if (songData.id) {
             song = await songRepository.findOne(songData.id);
         }

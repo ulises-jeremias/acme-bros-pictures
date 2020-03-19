@@ -50,7 +50,7 @@ export default class WorkflowsController {
                 .getMany();
 
             const projects = _.map(userProjects, (userProject: UserProject) => userProject.project);
-            
+
             const results = _.map(projects, async (project: Project) => {
                 return await trackRepository.find({ where: { projectId: project }, relations: ['workflow'] });
             });
@@ -61,7 +61,7 @@ export default class WorkflowsController {
             });
 
             const workflowsTasks = _.map(await Promise.all(workflows), async (workflow: Workflow) => {
-                return await taskRepository.find({ where: { workflowId: workflow.id }, relations: ['workflow'] })
+                return await taskRepository.find({ where: { workflowId: workflow.id }, relations: ['workflow'] });
             });
 
             ctx.ok({ data: _.flatten(await Promise.all(workflowsTasks)) });

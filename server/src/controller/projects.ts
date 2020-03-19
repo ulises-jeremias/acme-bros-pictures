@@ -42,7 +42,7 @@ export default class ProjectsController {
             const results = _.map(projects, async (project: UserProject) => ({
                 watching: project.watching,
                 project: project.project,
-                employeesCount: await userProjectRepository.count({ project: project.project }), 
+                employeesCount: await userProjectRepository.count({ project: project.project }),
             }));
 
             ctx.ok({ data: await Promise.all(results) });
@@ -110,7 +110,7 @@ export default class ProjectsController {
             where: { project },
             relations: ['song', 'workflow']
         });
-        
+
         const results = _.map(tracks, async (track: Track) => {
             const workflow = await workflowRepository.findOne({
                 where: { track },

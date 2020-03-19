@@ -48,7 +48,7 @@ export default class WorkflowsController {
                 .getMany();
 
             const projects = _.map(userProjects, (userProject: UserProject) => userProject.project);
-            
+
             const results = _.map(projects, async (project: Project) => {
                 return await trackRepository.find({ where: { projectId: project }, relations: ['workflow'] });
             });
