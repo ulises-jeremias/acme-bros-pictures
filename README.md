@@ -13,7 +13,7 @@ $ cd acme-bros-pictures
 
 ```sh
 $ cd server
-$ echo "DB_PASS=password\nDB_HOST=db" > .env
+$ echo "DB_PASS=postgres\nDB_HOST=db" > .env
 $ docker-compose -f docker-compose.yml up --build
 ```
 
