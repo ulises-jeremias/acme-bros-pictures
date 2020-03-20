@@ -9,7 +9,7 @@ $ git clone https://github.com/ulises-jeremias/acme-bros-pictures
 $ cd acme-bros-pictures
 ```
 
-### Run Server (with Database)
+### Run Server (with PostgreSQL)
 
 ```sh
 $ cd server
