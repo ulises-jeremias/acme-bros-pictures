@@ -71,11 +71,11 @@ function handleError(error, options = { onUnauthorizedRedirect: true }) {
   if (error
       && error.response
       && error.response.data
-      && !_.isNull(error.response.data.error)
-      && _.isString(error.response.data.error)
-      && !_.isEmpty(error.response.data.error)
+      && !_.isNull(error.response.data.message)
+      && _.isString(error.response.data.message)
+      && !_.isEmpty(error.response.data.message)
   ) {
-    message = message || error.response.data.error;
+    message = message || error.response.data.message;
   }
 
   if (error
@@ -103,7 +103,7 @@ function handleError(error, options = { onUnauthorizedRedirect: true }) {
       }
       case 403:
       {
-        redirect = '/logout';
+        redirect = null;
         break;
       }
 

@@ -9,32 +9,29 @@ $ git clone https://github.com/ulises-jeremias/acme-bros-pictures
 $ cd acme-bros-pictures
 ```
 
-### Server (with Database)
+### Run Server (with Database)
 
 ```sh
 $ cd server
 $ echo "DB_PASS=postgres\nDB_HOST=db" > .env
-$ docker-compose -f docker-compose-dev.yml up --build
+$ docker-compose -f docker-compose.yml up --build
 ```
+
+Once the server is running, the available endpoints can be known at [localhost:3000/swagger](http://localhost:3000/swagger).
 
 > En the following [file](./server/README.md) you can find a complete guide about how to start the api and related scripts.
 
-### Client
+### Run Client App
 
 ```sh
 $ cd client
 $ export API_BASE_URL=http://localhost:3000/api/v1/
-$ yarn serve:prod
+$ yarn docker:dev # or yarn docker:build && yarn docker:start
 ```
 
-_or by using docker and nginx_,
+Then the app will be running at [localhost:8091](http://localhost:8091)
 
-```sh
-$ ...
-$ yarn docker:prod # or yarn docker:build:prod && yarn docker:start:prod
-```
-
-> En the following [file](./client/README.md) you can find a complete guide about how to start the client app and related scripts.
+> In the following [file](./client/README.md) you can find a complete guide about how to start the client app and related scripts.
 
 ## Data Model
 

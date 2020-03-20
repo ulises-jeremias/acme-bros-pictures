@@ -52,6 +52,7 @@ export const createProject = (project) => async (dispatch, getState) => {
     dispatch({ type: PROJECTS_PROJECT_CREATE_REQUEST });
     await projectsBackend.createProject(project, token);
     dispatch({ type: PROJECTS_PROJECT_CREATE_SUCCESS });
+    dispatch(push('/'));
   } catch (err) {
     const [message, redirect] = handleError(err);
     if (redirect) {

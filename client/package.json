@@ -27,8 +27,8 @@
     "docker:build": "docker build -f docker/Dockerfile --target development -t acme-bros-pictures .",
     "docker:start": "docker run --rm -it --network host -v $PWD:/usr/src/app acme-bros-pictures",
     "docker:prod": "yarn docker:build:prod && yarn docker:start:prod",
-    "docker:build:prod": "docker build -f docker/Dockerfile --target production -t acme-bros-pictures:production .",
-    "docker:start:prod": "docker run --rm -it --network host -e API_URL_BASE=$API_URL_BASE -v $PWD:/usr/src/app acme-bros-pictures:production"
+    "docker:build:prod": "docker build --build-arg API_BASE_URL=$API_BASE_URL -f docker/Dockerfile --target production -t acme-bros-pictures:production .",
+    "docker:start:prod": "docker run --rm -it --network host -e API_BASE_URL=$API_BASE_URL -v $PWD:/usr/src/app acme-bros-pictures:production"
   },
   "dependencies": {
     "axios": "^0.19.0",

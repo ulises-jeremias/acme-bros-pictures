@@ -33,6 +33,7 @@ export const createTrack = (track) => async (dispatch, getState) => {
     dispatch({ type: TRACKS_TRACK_CREATE_REQUEST });
     await tracksBackend.createTrack(track, token);
     dispatch({ type: TRACKS_TRACK_CREATE_SUCCESS });
+    dispatch(push(`/projects/${track.projectId}`));
   } catch (err) {
     const [message, redirect] = handleError(err);
     if (redirect) {

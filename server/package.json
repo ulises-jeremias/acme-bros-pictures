@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "yarn lint --fix",
-    "build": "yarn lint && yarn clean && tsc",
+    "build": "yarn lint && yarn clean && tsc && cp -r ./src/module/swagger/{tags.yaml,template} ./dist/module/swagger",
     "clean": "yarn clean:build",
     "clean:build": "rm -rf dist",
     "cli": "ts-node src/cli.ts",

@@ -35,8 +35,9 @@ export const createWorkflow = (workflow) => async (dispatch, getState) => {
   const { auth: { token } } = getState();
   try {
     dispatch({ type: WORKFLOWS_WORKFLOW_CREATE_REQUEST });
-    await workflowsBackend.createWorkflow(workflow, token);
+    const { data } = await workflowsBackend.createWorkflow(workflow, token);
     dispatch({ type: WORKFLOWS_WORKFLOW_CREATE_SUCCESS });
+    dispatch(push(`/workflows/${data.id}`));
   } catch (err) {
     const [message, redirect] = handleError(err);
     if (redirect) {

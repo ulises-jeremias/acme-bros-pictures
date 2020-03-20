@@ -1,29 +1,29 @@
 {
-  "title": "Algo salió mal",
-  "defaultError": "No se puede mostrar información sobre el error actual",
+  "title": "Something went wrong",
+  "defaultError": "Cannot display information about current error",
   "option": {
-    "refresh": "Volver a ingresar"
+    "refresh": "Login again"
   },
   "messages": {
-    "networkError": "No se pudo conectar con el servidor. Vuelva a intentarlo luego."
+    "networkError": "Could not connect to server. Please try again later."
   },
   "code": {
-    "301": "Recurso movido permanentemente.",
-    "400": "Petición incorrecta.",
-    "401": "Acceso no autorizado.",
-    "403": "Acceso prohibido.",
-    "404": "No encontrado",
-    "405": "Método HTTP no admitido.",
-    "406": "Formato no aceptado.",
-    "407": "Autenticación requerida.",
-    "408": "Tiempo de espera del cliente superado.",
-    "409": "Hubo un conflicto con el recurso que quiere usar.",
-    "500": "Error interno del servidor.",
-    "501": "Funcionalidad no implementada por el servidor.",
-    "502": "Fallo de conexión con otro servidor.",
-    "503": "Servicio no disponible.",
-    "504": "Tiempo de espera superado.",
-    "505": "Versión HTTP no soportada.",
+    "301": "Resource moved permanently.",
+    "400": "Incorrect request.",
+    "401": "Unauthorized access.",
+    "403": "Forbidden access.",
+    "404": "Not found",
+    "405": "HTTP method not supported.",
+    "406": "Format not accepted.",
+    "407": "Authentication required.",
+    "408": "Customer waiting time exceeded.",
+    "409": "There was a conflict with the resource you want to use.",
+    "500": "Internal Server Error.",
+    "501": "Functionality not implemented by the server.",
+    "502": "Connection to another server failed.",
+    "503": "Service not available.",
+    "504": "Waiting time exceeded.",
+    "505": "HTTP version not supported.",
     "default": "Error general."
   }
 }

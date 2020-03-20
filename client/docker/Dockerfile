@@ -17,6 +17,10 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+ARG API_BASE_URL
+
+ENV API_BASE_URL=$API_BASE_URL
+
 RUN yarn && \
     yarn build:prod
 
