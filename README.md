@@ -2,6 +2,40 @@
 
 # ACME BROS Pictures
 
+## QuickStart
+
+```sh
+$ git clone https://github.com/ulises-jeremias/acme-bros-pictures
+$ cd acme-bros-pictures
+```
+
+### Server (with Database)
+
+```sh
+$ cd server
+$ echo "DB_PASS=password\nDB_HOST=db" > .env
+$ docker-compose -f docker-compose.yml up --build
+```
+
+> En the following [file](./server/README.md) you can find a complete guide about how to start the api and related scripts.
+
+### Client
+
+```sh
+$ cd client
+$ export API_BASE_URL=http://localhost:3000/api/v1
+$ yarn serve:prod
+```
+
+_or by using docker and nginx_,
+
+```sh
+$ ...
+$ yarn docker:prod # or yarn docker:prod:build && yarn docker:prod:start
+```
+
+> En the following [file](./client/README.md) you can find a complete guide about how to start the client app and related scripts.
+
 ## Data Model
 
 The data model used for the implementation of ACME BROS Pictures App can be seen in the following diagram,
@@ -57,3 +91,15 @@ Based on the suggested technologies and the proposed data model, the following s
  * [Babel](https://babeljs.io/) - A transpiler for javascript
  * [Webpack](https://webpack.js.org/) - A module bundler
  * [LESS](http://lesscss.org/) - A css metalanguage
+
+## Immediate Visibility
+
+> Proposal
+
+To give immediate visibility on the changes in the status of the workflow, the use of FCM is proposed.
+
+Firebase Cloud Messaging (FCM) offers a broad range of messaging options and capabilities.
+
+FMC offers two types of messages: notification messages and data messages. With them you can notify the change of the status of the workflow or even send the corresponding client the information that allows you to determine which tasks of the workflow to update to keep the data always updated.
+
+For this, the current data model presents in the relationship between projects and users the attribute "watching" that allows determining the degree of interest of a user regarding the changes of state in the workflows for each project.
