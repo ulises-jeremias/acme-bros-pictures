@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "yarn lint --fix",
-    "build": "yarn lint && yarn clean && tsc && cp -f package.json ./dist/src",
+    "build": "yarn lint && yarn clean && tsc && cp -f package.json ./dist",
     "clean": "yarn clean:build",
     "clean:build": "rm -rf dist",
     "cli": "ts-node src/cli.ts",

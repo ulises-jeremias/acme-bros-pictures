@@ -23,7 +23,7 @@ $ docker-compose -f docker-compose.yml up --build
 
 ```sh
 $ cd client
-$ export API_BASE_URL=http://localhost:3000/api/v1
+$ export API_BASE_URL=http://localhost:3000/api/v1/
 $ yarn serve:prod
 ```
 
