@@ -4,7 +4,7 @@ import {
     NotFound,
     BadRequest,
     UnprocessableEntity,
-} from '../../src/constant/errors';
+} from '../../constant/errors';
 
 describe('Errors', () => {
     it('should internal error', (done) => {

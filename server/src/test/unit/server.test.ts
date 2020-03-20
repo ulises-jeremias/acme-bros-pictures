@@ -1,5 +1,5 @@
-import app from '../../src/server';
-import config from '../../src/config';
+import app from '../../server';
+import config from '../../config';
 import delay from 'delay';
 
 const mockListen = jest.fn();

@@ -14,7 +14,7 @@ $ cd acme-bros-pictures
 ```sh
 $ cd server
 $ echo "DB_PASS=postgres\nDB_HOST=db" > .env
-$ docker-compose -f docker-compose.yml up --build
+$ docker-compose -f docker-compose-dev.yml up --build
 ```
 
 > En the following [file](./server/README.md) you can find a complete guide about how to start the api and related scripts.
@@ -31,7 +31,7 @@ _or by using docker and nginx_,
 
 ```sh
 $ ...
-$ yarn docker:prod # or yarn docker:prod:build && yarn docker:prod:start
+$ yarn docker:prod # or yarn docker:build:prod && yarn docker:start:prod
 ```
 
 > En the following [file](./client/README.md) you can find a complete guide about how to start the client app and related scripts.

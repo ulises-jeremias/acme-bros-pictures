@@ -1,4 +1,4 @@
-import { normalizePort } from '../../src/config';
+import { normalizePort } from '../../config';
 
 describe('function normalize port', () => {
     it('should be false value', (done) => {
