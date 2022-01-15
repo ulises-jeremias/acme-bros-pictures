@@ -74,7 +74,7 @@
     "jest": "^23.6.0",
     "nodemon": "^2.0.2",
     "pre-commit": "^1.2.2",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "supertest": "^3.4.2",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
