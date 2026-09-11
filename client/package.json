@@ -46,7 +46,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "inject-html-webpack-plugin": "^0.0.39",
     "js-cookie": "^2.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.27",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
